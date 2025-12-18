@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="vista.registroGeneral.RegistroGeneral">
+  <grid id="27dc6" binding="panelRegistroGeneral" layout-manager="GridLayoutManager" row-count="12" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="689" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="f6421" class="javax.swing.JLabel" binding="registroGnralLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="4" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registro General"/>
+        </properties>
+      </component>
+      <component id="b3c77" class="javax.swing.JButton" binding="registrarPaisButton">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar País"/>
+        </properties>
+      </component>
+      <component id="fb3e4" class="javax.swing.JButton" binding="registrarAutoButton" default-binding="true">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar Auto"/>
+        </properties>
+      </component>
+      <component id="7a2c4" class="javax.swing.JButton" binding="registrarEscuderiaButton">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar Escudería"/>
+        </properties>
+      </component>
+      <component id="b2414" class="javax.swing.JButton" binding="registrarCircuitoButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar Circuito"/>
+        </properties>
+      </component>
+      <component id="d4f80" class="javax.swing.JButton" binding="registrarPilotoButton">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar Piloto"/>
+        </properties>
+      </component>
+      <component id="5e61a" class="javax.swing.JButton" binding="volverButton">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Volver"/>
+        </properties>
+      </component>
+      <component id="5b537" class="javax.swing.JLabel" binding="warningLabel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-495827"/>
+          <text value="ATENCIÓN: Para un ingreso satisfactorio se debe ingresar primero el listado de países."/>
+        </properties>
+      </component>
+      <component id="d59ac" class="javax.swing.JButton" binding="registrarMecanicoButton" default-binding="true">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Registrar Mecanico"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

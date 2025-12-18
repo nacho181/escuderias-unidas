@@ -1,0 +1,44 @@
+package entidades;
+
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class AutoPiloto {
+    private final LocalDate fechaAsignacion;
+    private final Piloto piloto;
+    private final Auto auto;
+
+    Scanner sc = new Scanner(System.in);
+
+
+    public Piloto getPiloto() {
+        return piloto;
+    }
+
+    public LocalDate getFechaAsignacion() {
+        return fechaAsignacion;
+    }
+
+    public AutoPiloto(LocalDate fechaAsignacion, Piloto piloto, Auto auto) {
+        this.fechaAsignacion = fechaAsignacion;
+        this.piloto = piloto;
+        this.auto = auto;
+    }
+
+    public Auto getAuto() {
+        return auto;
+    }
+
+    @Override
+    public String toString() {
+        return "AutoPiloto{" +
+                "fechaAsignacion='" + fechaAsignacion + '\'' +
+                ", piloto=" + piloto +
+                ", auto=" + auto +
+                ", sc=" + sc +
+                '}';
+    }
+}
+
+
+

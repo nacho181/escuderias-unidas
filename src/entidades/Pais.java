@@ -1,0 +1,36 @@
+package entidades;
+
+public class Pais {
+    private int idPais;
+    private String descripcion;
+
+    public Pais() {
+    }
+
+    public Pais(int idPais, String descripcion) {
+        this.idPais = idPais;
+        this.descripcion = descripcion;
+    }
+
+    public int getIdPais() {
+        return idPais;
+    }
+
+    public void setIdPais(int idPais) {
+        this.idPais = idPais;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Override
+    public String toString() {
+        return "País : " + descripcion + "\n";
+    }
+
+}

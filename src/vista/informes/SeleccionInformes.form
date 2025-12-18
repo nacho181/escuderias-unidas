@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="vista.informes.SeleccionInformes">
+  <grid id="27dc6" binding="seleccionInfPanel" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="529" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="2e05f" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Informes Generales"/>
+        </properties>
+      </component>
+      <component id="1375" class="javax.swing.JButton" binding="opcion1Button">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Resultados detallados de cada carrera en un rango de fechas"/>
+        </properties>
+      </component>
+      <component id="2fb75" class="javax.swing.JButton" binding="opcion2Button">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Ranking de pilotos según puntos acumulados"/>
+        </properties>
+      </component>
+      <component id="4f7fd" class="javax.swing.JButton" binding="opcion3Button">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Histórico de podios y victorias de un piloto determinado"/>
+        </properties>
+      </component>
+      <component id="1ec98" class="javax.swing.JButton" binding="opcion4Button">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Informe de autos utilizados por escudería en diferentes carreras"/>
+        </properties>
+      </component>
+      <component id="849ec" class="javax.swing.JButton" binding="opcion5Button">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Informe de años de experiencia y especialidad de los mecánicos por escudería"/>
+        </properties>
+      </component>
+      <component id="fd88f" class="javax.swing.JButton" binding="opcion6Button">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cantidad de veces que un determinado piloto corrió en un circuito determinado"/>
+        </properties>
+      </component>
+      <component id="1c41" class="javax.swing.JButton" binding="opcion7Button">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cantidad de carreras que se corrieron en un circuito determinado"/>
+        </properties>
+      </component>
+      <component id="e13e4" class="javax.swing.JButton" binding="volverButton" default-binding="true">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Volver"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
