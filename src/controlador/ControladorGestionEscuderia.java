@@ -6,6 +6,10 @@ import vista.VentanaPrincipal;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+
+import static controlador.ControladorPrincipal.HORA_INPUT;
+import static controlador.ControladorPrincipal.formatter;
 
 /**
  * Controlador encargado de gestionar las acciones del módulo de gestión de escuderías.
@@ -93,14 +97,28 @@ public class ControladorGestionEscuderia {
     private void registrarPiloto() {
         String dniPiloto = vista.getRegistrarPilotoEscuderia().getDniField().getText();
         String fechaInicioStr = vista.getRegistrarPilotoEscuderia().getAnioEntradaField().getText();
-        LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, ControladorPrincipal.formatter);
+        LocalDate fechaInicio = null;
         String fechaFinalStr = vista.getRegistrarPilotoEscuderia().getAnioFinField().getText();
-        LocalDate fechaFinal = LocalDate.parse(fechaFinalStr, ControladorPrincipal.formatter);
+        LocalDate fechaFinal = null;
 
         if (dniPiloto == null || fechaInicioStr.isBlank() || fechaFinalStr.isBlank() || dniPiloto.isBlank()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
             return;
         }
+
+        try{
+            fechaInicio = LocalDate.parse(fechaInicioStr, ControladorPrincipal.formatter);
+            fechaFinal = LocalDate.parse(fechaFinalStr, ControladorPrincipal.formatter);
+        }catch (Exception _){
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Alguna de las dos fechas estan fuera de formato, recuerde de usar el formato (AAAAMMDD).",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
 
         if (fechaInicio.isAfter(fechaFinal)) {
             JOptionPane.showMessageDialog(null, "La fecha de inicio no puede ser mayor o igual que la de finalización.");

@@ -6,8 +6,12 @@ import vista.VentanaPrincipal;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static controlador.ControladorPrincipal.HORA_INPUT;
+import static controlador.ControladorPrincipal.formatter;
 
 /**
  * Controlador encargado del proceso de registro de resultados de una carrera.
@@ -40,8 +44,21 @@ public class ControladorRegistrarResultado {
      */
     private void enviarFecha() {
         String fechaStr = vista.getRegistroResultados().getFechaField().getText();
-        LocalDate fecha = LocalDate.parse(fechaStr, ControladorPrincipal.formatter);
+        LocalDate fecha = null;
         modelo.getModeloRegistrarResultado().setFecha(fecha);
+
+        try{
+            fecha = LocalDate.parse(fechaStr, ControladorPrincipal.formatter);
+        }catch (Exception _){
+            JOptionPane.showMessageDialog(
+                    null,                      // o null
+                    "La fecha esta fuera de formato, recuerde de usar el formato (AAAAMMDD).",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
 
         Carrera carrera = modelo.buscarCarrera(fecha);
         if (carrera == null) {
@@ -52,6 +69,8 @@ public class ControladorRegistrarResultado {
 
         // Carga los participantes de la carrera en la tabla
         vista.getSeleccionarPosiciones().cargarPilotos(carrera.getAutoPilotos());
+        modelo.getModeloRegistrarResultado().setFecha(fecha);
+        modelo.getModeloRegistrarResultado().setCircuito(carrera.getCircuito());
         limpiarCamposRegistroResultado();
         vista.mostrarPanel("seleccionarPosiciones");
     }
@@ -175,6 +194,7 @@ public class ControladorRegistrarResultado {
 
         // Limpiar datos y volver al menú
         modelo.getModeloRegistrarResultado().setFecha(null);
+        modelo.getModeloRegistrarResultado().setCircuito(null);
         vista.getSeleccionarPosiciones().limpiarTabla();
 
         JOptionPane.showMessageDialog(vista, "Carrera registrada correctamente.");

@@ -84,15 +84,33 @@ public class ControladorPlanificarCarrera {
      */
     private void circuitoSeleccionado() {
         String fechaStr = vista.getCircuitoSeleccionado().getFechaField().getText();
-        LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+        String totCarreras = vista.getCircuitoSeleccionado().getTotCarreraField().getText();
         String numVueltas = vista.getCircuitoSeleccionado().getNumVueltField().getText();
         String horaCarreraStr = vista.getCircuitoSeleccionado().getHoraCarrera().getText();
-        LocalTime horaCarrera = LocalTime.parse(horaCarreraStr, HORA_INPUT);
-        String totCarreras = vista.getCircuitoSeleccionado().getTotCarreraField().getText();
+        LocalTime horaCarrera = null;
+        LocalDate fecha = null;
 
-        if (fechaStr.isBlank() || numVueltas.isBlank() || horaCarreraStr.isBlank() || totCarreras.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Complete todos los campos.");
+        if(fechaStr.isBlank() || totCarreras.isBlank() || numVueltas.isBlank() || horaCarreraStr.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Complete todos los campos", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+
+        try{
+            horaCarrera = LocalTime.parse(horaCarreraStr, HORA_INPUT);
+            fecha = LocalDate.parse(fechaStr, formatter);
+        }catch (Exception _){
+            JOptionPane.showMessageDialog(
+                    null,                      // o null
+                    "La fecha o la hora están fuera de formato, recuerde de usar el formato (AAAAMMDD) y (HHmm).",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        if(modelo.buscarCarrera(fecha) != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe una carrera en esa fecha.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        return;
         }
 
         try {

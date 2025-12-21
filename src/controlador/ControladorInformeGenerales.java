@@ -6,8 +6,10 @@ import vista.VentanaPrincipal;
 
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
+import static controlador.ControladorPrincipal.HORA_INPUT;
 import static controlador.ControladorPrincipal.formatter;
 
 /**
@@ -70,11 +72,12 @@ public class ControladorInformeGenerales {
      * Genera un informe de carreras dentro de un rango de fechas.
      */
     private void opcion1() {
-        try {
+
             String inicioStr = vista.getOpcionUno().getPrimerFechaField().getText();
             String finStr = vista.getOpcionUno().getSegundaFechaField().getText();
-            LocalDate inicio = LocalDate.parse(inicioStr, formatter);
-            LocalDate fin = LocalDate.parse(finStr, formatter);
+            LocalDate inicio = null;
+            LocalDate fin = null;
+
 
             if (inicioStr.isEmpty() || finStr.isEmpty()) {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar ambas fechas.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -82,6 +85,19 @@ public class ControladorInformeGenerales {
             }
             if (inicio.isAfter(fin)) {
                 JOptionPane.showMessageDialog(vista, "La segunda fecha debe ser posterior a la primera.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try{
+                inicio = LocalDate.parse(inicioStr, formatter);
+                fin = LocalDate.parse(finStr, formatter);
+            }catch (Exception _){
+                JOptionPane.showMessageDialog(
+                        null,                      // o null
+                        "Alguna de la dos fechas estan fuera de formato, recuerde de usar el formato (AAAAMMDD).",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
                 return;
             }
 
@@ -107,9 +123,6 @@ public class ControladorInformeGenerales {
                     }
                 }
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(vista, "Error al generar informe: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void limpiarCamposOpcion1() {
