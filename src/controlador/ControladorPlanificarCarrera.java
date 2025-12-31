@@ -9,8 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import static controlador.ControladorPrincipal.HORA_INPUT;
-import static controlador.ControladorPrincipal.formatter;
+import static modelo.Modelo.HORA_INPUT;
+import static modelo.Modelo.formatter;
 
 /**
  * Controlador encargado de la planificación de carreras.

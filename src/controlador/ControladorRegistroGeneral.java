@@ -74,7 +74,6 @@ public class ControladorRegistroGeneral {
 
         try {
             int numero = Integer.parseInt(id);
-
             // Verificar duplicado
             for (Pais p : modelo.getRegistroGeneral().getPaises()) {
                 if (p.getIdPais() == numero || p.getDescripcion().equalsIgnoreCase(descripcion)) {
@@ -134,6 +133,11 @@ public class ControladorRegistroGeneral {
         String nombreEscuderia = vista.getRegistrarEscuderia().getNombreEscuderiaField().getText();
         String idPaisEscuderia = vista.getRegistrarEscuderia().getIdEscuderiaField().getText();
 
+        if(Modelo.nombreValido(nombreEscuderia)){
+            JOptionPane.showMessageDialog(null, "El nombre es solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (idPaisEscuderia.isBlank() || nombreEscuderia.isBlank()) {
             JOptionPane.showMessageDialog(vista, "Complete todos los campos");
             return;
@@ -184,6 +188,10 @@ public class ControladorRegistroGeneral {
         }
 
         try {
+            if (!Modelo.nombreValido(nombreCircuito)) {
+                JOptionPane.showMessageDialog(null, "El nombre del circuito solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int numeroLongitud = Integer.parseInt(longitudCircuito);
             int numeroPais = Integer.parseInt(idPaisCircuito);
             Pais pais = modelo.comprobarPais(numeroPais);
@@ -239,6 +247,11 @@ public class ControladorRegistroGeneral {
         }
 
         try {
+            if (!Modelo.nombreValido(nombre) || !Modelo.nombreValido(apellido)) {
+                JOptionPane.showMessageDialog(null, "El nombre y apellido solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             int numeroPais = Integer.parseInt(idPais);
             int numeroCompe = Integer.parseInt(numCompe);
             int numeroVict = Integer.parseInt(numVict);
@@ -254,14 +267,14 @@ public class ControladorRegistroGeneral {
             }
 
             // Verificar duplicado
-            for (Piloto p : modelo.getRegistroGeneral().getPiloto()) {
-                if (p.getDni().equals(dni)) {
-                    JOptionPane.showMessageDialog(vista, "El piloto ya está registrado.");
+            for (Persona persona : modelo.getRegistroGeneral().getPersonas()) {
+                if (persona.getDni().equals(dni)) {
+                    JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
                     return;
                 }
             }
 
-            modelo.getModeloRegistro().agregarPilotoRGral(new Piloto(
+            modelo.getModeloRegistro().agregarPersonaGral(new Piloto(
                     dni, nombre, apellido, pais, numeroCompe, numeroVict,
                     numeroPole, numeroVuelt, numeroPod, numeroPuntos));
             JOptionPane.showMessageDialog(vista, "Registro guardado con éxito");
@@ -302,6 +315,10 @@ public class ControladorRegistroGeneral {
         }
 
         try {
+            if (!Modelo.nombreValido(nombre) || !Modelo.nombreValido(apellido)) {
+                JOptionPane.showMessageDialog(null, "El nombre y apellido solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             int numeroPais = Integer.parseInt(idPais);
             int numeroAniosExp = Integer.parseInt(aniosExp);
             Pais pais = modelo.comprobarPais(numeroPais);
@@ -312,14 +329,14 @@ public class ControladorRegistroGeneral {
             }
 
             // Verificar duplicado
-            for (Mecanico m : modelo.getRegistroGeneral().getMecanicos()) {
-                if (m.getDni().equals(dni)) {
-                    JOptionPane.showMessageDialog(vista, "El mecánico ya está registrado.");
+            for (Persona persona : modelo.getRegistroGeneral().getPersonas()) {
+                if (persona.getDni().equals(dni)) {
+                    JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
                     return;
                 }
             }
 
-            modelo.getModeloRegistro().agregarMecanicoRGral(new Mecanico(
+            modelo.getModeloRegistro().agregarPersonaGral(new Mecanico(
                     dni, nombre, apellido, pais, especialidad, numeroAniosExp));
             JOptionPane.showMessageDialog(vista, "Registro guardado con éxito");
             limpiarCamposMecanico();

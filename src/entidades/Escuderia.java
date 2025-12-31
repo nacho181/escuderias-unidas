@@ -3,10 +3,10 @@ package entidades;
 import java.util.ArrayList;
 
 public class Escuderia {
-    private String nombre;
-    private ArrayList<Auto> autos;
-    private ArrayList<PilotoEscuderia> pilotos;
-    private ArrayList<Mecanico> mecanicos;
+    private final String nombre;
+    private final ArrayList<Auto> autos;
+    private final ArrayList<PilotoEscuderia> pilotos;
+    private final ArrayList<Mecanico> mecanicos;
     private Pais pais;
 
 

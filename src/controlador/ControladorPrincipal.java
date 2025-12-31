@@ -7,8 +7,9 @@ import java.time.format.DateTimeFormatter;
 
 
 public class ControladorPrincipal {
+
     private Modelo modelo;
-    private VentanaPrincipal vista;
+    private final VentanaPrincipal vista;
     private ControladorRegistroGeneral controladorRegistroGeneral;
     private ControladorGestionEscuderia controladorGestionEscuderia;
     private ControladorPlanificarCarrera controladorPlanificarCarrera;
@@ -41,11 +42,6 @@ public class ControladorPrincipal {
         vista.getSeleccionInformes().getVolverButton().addActionListener(e -> vista.mostrarPanel("menu"));
     }
     //
-    public static final DateTimeFormatter HORA_INPUT =
-            DateTimeFormatter.ofPattern("HHmm");
 
-    public static final DateTimeFormatter HORA_OUTPUT =
-            DateTimeFormatter.ofPattern("HH:mm");
-    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 }

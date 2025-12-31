@@ -1,5 +1,6 @@
 package controlador;
 
+import entidades.Auto;
 import entidades.PilotoEscuderia;
 import modelo.Modelo;
 import vista.VentanaPrincipal;
@@ -8,8 +9,6 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static controlador.ControladorPrincipal.HORA_INPUT;
-import static controlador.ControladorPrincipal.formatter;
 
 /**
  * Controlador encargado de gestionar las acciones del módulo de gestión de escuderías.
@@ -107,8 +106,8 @@ public class ControladorGestionEscuderia {
         }
 
         try{
-            fechaInicio = LocalDate.parse(fechaInicioStr, ControladorPrincipal.formatter);
-            fechaFinal = LocalDate.parse(fechaFinalStr, ControladorPrincipal.formatter);
+            fechaInicio = LocalDate.parse(fechaInicioStr, Modelo.formatter);
+            fechaFinal = LocalDate.parse(fechaFinalStr, Modelo.formatter);
         }catch (Exception _){
             JOptionPane.showMessageDialog(
                     null,
@@ -229,17 +228,16 @@ public class ControladorGestionEscuderia {
             return;
         }
 
-        // Verificar duplicado
-        for (var a : modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().getAutos()) {
-            if (a.getModelo().equalsIgnoreCase(modeloAuto)) {
-                JOptionPane.showMessageDialog(null, "El auto ya pertenece a esta escudería.");
-                return;
-            }
+        if(modelo.buscarAuto(modeloAuto).getAsignado()) {
+            JOptionPane.showMessageDialog(null, "El auto ya esta asignado a una escudería.");
+            return;
         }
+
 
         // Registrar
         modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().agregarAuto(modelo.buscarAuto(modeloAuto));
         JOptionPane.showMessageDialog(null, "Auto agregado correctamente.");
+        modelo.buscarAuto(modeloAuto).setAsignado(true);
         limpiarCampoAuto();
     }
 

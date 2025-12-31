@@ -242,7 +242,4 @@ public class VentanaPrincipal extends JFrame {
      * Inicializa la interfaz gráfica en el hilo de eventos de Swing.
      * @param args argumentos de línea de comandos (no utilizados).
      */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(VentanaPrincipal::new);
-    }
 }

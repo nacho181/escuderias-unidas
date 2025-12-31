@@ -2,6 +2,8 @@ import controlador.ControladorPrincipal;
 import modelo.Modelo;
 import vista.VentanaPrincipal;
 
+import javax.swing.*;
+
 /**
  * Clase principal del sistema de gestión de carreras.
  * <p>
@@ -29,13 +31,15 @@ public class Programa {
      */
 
     public static void main(String[] args) {
-        // Se crea la ventana principal (Vista)
-        VentanaPrincipal ventana = new VentanaPrincipal();
-        // Se instancia el modelo que contiene la lógica y datos del sistema
-        Modelo modelo = new Modelo();
-        // Se crea el controlador principal que conecta la vista con el modelo
-        new ControladorPrincipal(modelo, ventana);
-        // Finalmente, se hace visible la ventana para el usuario
-        ventana.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            // Se crea la ventana principal (Vista)
+            VentanaPrincipal ventana = new VentanaPrincipal();
+            // Se instancia el modelo que contiene la lógica y datos del sistema
+            Modelo modelo = new Modelo();
+            // Se crea el controlador principal que conecta la vista con el modelo
+            new ControladorPrincipal(modelo, ventana);
+            // Finalmente, se hace visible la ventana para el usuario
+            ventana.setVisible(true);
+        });
     }
 }

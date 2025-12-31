@@ -3,6 +3,7 @@ package modelo;
 import entidades.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +23,9 @@ public class Modelo {
     private final ModeloInformeGenerales modeloInformeGenerales;
     private final ArrayList<Carrera> carreras;
     private final ArrayList<RegistroCarrera> carrerasResultados;
+    public static final DateTimeFormatter HORA_INPUT = DateTimeFormatter.ofPattern("HHmm");
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    private static final String REGEX_NOMBRE = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$";
 
 
     /**
@@ -77,9 +81,9 @@ public class Modelo {
 
     /** Suma puntos al piloto con el DNI indicado. */
     public void agregarPuntaje(String dni, int puntaje) {
-        for (Piloto piloto : registroGeneral.getPiloto()) {
-            if (piloto.getDni().equals(dni)) {
-                piloto.agregarPuntosAcumulados(puntaje);
+        for (Persona persona : registroGeneral.getPersonas()) {
+            if (persona instanceof Piloto p && persona.getDni().equals(dni)) {
+                p.agregarPuntosAcumulados(puntaje);
             }
         }
     }
@@ -106,8 +110,8 @@ public class Modelo {
 
     /** Busca un piloto por DNI. */
     public Piloto buscarPiloto(String dni) {
-        for (Piloto p : registroGeneral.getPiloto()) {
-            if (p.getDni().equals(dni)) {
+        for (Persona persona : registroGeneral.getPersonas()) {
+            if (persona instanceof Piloto p && persona.getDni().equals(dni)) {
                 return p;
             }
         }
@@ -138,8 +142,8 @@ public class Modelo {
 
     /** Busca un mecánico por DNI. */
     public Mecanico buscarMecanico(String dni) {
-        for (Mecanico m : registroGeneral.getMecanicos()) {
-            if (m.getDni().equals(dni)) {
+        for (Persona persona : registroGeneral.getPersonas()) {
+            if (persona instanceof Mecanico m && persona.getDni().equals(dni)) {
                 return m;
             }
         }
@@ -178,6 +182,11 @@ public class Modelo {
         }
         return null;
     }
+
+    public static boolean nombreValido(String nombre) {
+        return nombre != null && nombre.matches(REGEX_NOMBRE);
+    }
+
 
     // Getters
 

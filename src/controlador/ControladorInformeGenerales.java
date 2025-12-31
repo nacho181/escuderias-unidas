@@ -3,14 +3,11 @@ package controlador;
 import entidades.*;
 import modelo.Modelo;
 import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
-import static controlador.ControladorPrincipal.HORA_INPUT;
-import static controlador.ControladorPrincipal.formatter;
+
 
 /**
  * Controlador encargado de manejar la generación de los distintos informes del sistema.
@@ -83,14 +80,10 @@ public class ControladorInformeGenerales {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar ambas fechas.", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if (inicio.isAfter(fin)) {
-                JOptionPane.showMessageDialog(vista, "La segunda fecha debe ser posterior a la primera.", "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
 
             try{
-                inicio = LocalDate.parse(inicioStr, formatter);
-                fin = LocalDate.parse(finStr, formatter);
+                inicio = LocalDate.parse(inicioStr, Modelo.formatter);
+                fin = LocalDate.parse(finStr, Modelo.formatter);
             }catch (Exception _){
                 JOptionPane.showMessageDialog(
                         null,                      // o null
@@ -99,6 +92,11 @@ public class ControladorInformeGenerales {
                         JOptionPane.ERROR_MESSAGE
                 );
                 return;
+            }
+
+            if (inicio.isAfter(fin)) {
+            JOptionPane.showMessageDialog(vista, "La segunda fecha debe ser posterior a la primera.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
             }
 
             ArrayList<RegistroCarrera> carreras = modelo.obtenerCarrerasEntreFechas(inicio, fin);
@@ -139,7 +137,13 @@ public class ControladorInformeGenerales {
             var tabla = vista.getOpcionDos().getModeloTabla();
             tabla.setRowCount(0);
 
-            ArrayList<Piloto> pilotos = modelo.getRegistroGeneral().getPiloto();
+            ArrayList<Piloto> pilotos = new ArrayList<>();
+            for(Persona persona : modelo.getRegistroGeneral().getPersonas()){
+                if(persona instanceof Piloto p){
+                    pilotos.add(p);
+                }
+            }
+
             if (pilotos.isEmpty()) {
                 JOptionPane.showMessageDialog(vista, "No hay pilotos registrados.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 return;

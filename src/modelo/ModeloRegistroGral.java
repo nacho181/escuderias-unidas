@@ -20,11 +20,7 @@ public class ModeloRegistroGral {
     public void agregarCircuitoRGral(Circuito circuito) {
         registroGeneral.agregarCircuito(circuito);
     }
-    public void agregarPilotoRGral(Piloto piloto) {
-        registroGeneral.agregarPiloto(piloto);
+    public void agregarPersonaGral(Persona persona) {
+        registroGeneral.agregarPersona(persona);
     }
-    public void agregarMecanicoRGral(Mecanico mecanico) {
-        registroGeneral.agregarMecanico(mecanico);
-    }
-
 }

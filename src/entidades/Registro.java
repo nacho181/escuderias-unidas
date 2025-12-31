@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class Registro {
 
-    private ArrayList<Piloto> pilotos;
-    private ArrayList<Mecanico> mecanicos;
+    private ArrayList<Persona> personas;
     private ArrayList<Auto> autos;
     private ArrayList<Escuderia> escuderias;
     private ArrayList<Circuito> circuitos;
@@ -20,8 +19,7 @@ public class Registro {
     private ArrayList<PilotoEscuderia> pilotoEscuderias;
 
     public Registro() {
-        pilotos = new ArrayList<>();
-        mecanicos = new ArrayList<>();
+        personas = new ArrayList<>();
         autos = new ArrayList<>();
         escuderias = new ArrayList<>();
         circuitos = new ArrayList<>();
@@ -58,8 +56,8 @@ public class Registro {
         return autoPilotos;
     }
 
-    public ArrayList<Piloto> getPiloto() {
-        return pilotos;
+    public ArrayList<Persona> getPersonas() {
+        return personas;
     }
 
     public ArrayList<Auto> getAutos() {
@@ -86,15 +84,9 @@ public class Registro {
         return carreras;
     }
 
-    public ArrayList<Mecanico> getMecanicos() {
-        return mecanicos;
-    }
 
-    public void agregarPiloto(Piloto p) {
-        pilotos.add(p);
-    }
-    public void agregarMecanico(Mecanico m) {
-        mecanicos.add(m);
+    public void agregarPersona(Persona p) {
+        personas.add(p);
     }
     public void agregarAuto(Auto a) {
         autos.add(a);

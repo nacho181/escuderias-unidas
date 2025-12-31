@@ -10,8 +10,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static controlador.ControladorPrincipal.HORA_INPUT;
-import static controlador.ControladorPrincipal.formatter;
 
 /**
  * Controlador encargado del proceso de registro de resultados de una carrera.
@@ -48,7 +46,7 @@ public class ControladorRegistrarResultado {
         modelo.getModeloRegistrarResultado().setFecha(fecha);
 
         try{
-            fecha = LocalDate.parse(fechaStr, ControladorPrincipal.formatter);
+            fecha = LocalDate.parse(fechaStr, Modelo.formatter);
         }catch (Exception _){
             JOptionPane.showMessageDialog(
                     null,                      // o null
