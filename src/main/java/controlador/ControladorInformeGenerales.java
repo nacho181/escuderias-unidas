@@ -212,9 +212,9 @@ public class ControladorInformeGenerales {
         for (RegistroCarrera reg : carreras) {
             tabla.addRow(new Object[]{
                     (reg.consultarPodioPiloto(dni) + 1),
-                    reg.conultarPiloto(dni).getNombre(),
-                    reg.conultarPiloto(dni).getApellido(),
-                    reg.getFecha(),
+                    reg.consultarPiloto(dni).getNombre(),
+                    reg.consultarPiloto(dni).getApellido(),
+                    reg.getCarrera().getFechaRealizacion(),
                     reg.getCarrera().getCircuito().getNombre()
             });
         }

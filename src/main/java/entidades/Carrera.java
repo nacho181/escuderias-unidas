@@ -5,12 +5,11 @@ import java.util.ArrayList;
 
 public class Carrera {
     private final LocalDate fechaRealizacion;
-    private final int numeroVueltas;
     private final LocalTime horaRealizacion;
     private final Circuito circuito;
-    private final ArrayList<AutoPiloto> autoPilotos;
-    private final ArrayList<AutoPiloto> posiciones;
     private int totalCarrerasCorridas;
+    private final int numeroVueltas;
+    private final ArrayList<AutoPiloto> autoPilotos;
 
 
     public Carrera(LocalDate fechaRealizacion, int numeroVueltas, LocalTime horaRealizacion, int totalCarrerasCorridas, Circuito circuito,ArrayList<AutoPiloto> autoPilotos) {
@@ -20,10 +19,6 @@ public class Carrera {
         this.totalCarrerasCorridas = totalCarrerasCorridas;
         this.circuito = circuito;
         this.autoPilotos = autoPilotos;
-        posiciones = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            posiciones.add(null);
-        }
     }
 
     public Circuito getCircuito() {
@@ -62,7 +57,6 @@ public class Carrera {
                 ", horaRealizacion='" + horaRealizacion + '\'' +
                 ", circuito=" + circuito +
                 ", autoPilotos=" + autoPilotos +
-                ", posiciones=" + posiciones +
                 ", totalCarrerasCorridas=" + totalCarrerasCorridas +
                 '}';
     }

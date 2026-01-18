@@ -6,7 +6,6 @@ public class Auto {
     private boolean asignado;
     private String modelo;
     private String motor;
-    private ArrayList<Piloto> pilotos;
 
     public Auto() {
     }

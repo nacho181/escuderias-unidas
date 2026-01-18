@@ -7,21 +7,15 @@ import java.util.ArrayList;
 public class RegistroCarrera {
    private Carrera carrera;
    private ArrayList<AutoPiloto> posiciones;
-   private AutoPiloto [] podio;
-   private LocalDate fecha;
+
    public RegistroCarrera() {
       posiciones = new ArrayList<>();
       for (int i = 0; i < 20; i++) {
          posiciones.add(null);
       }
-      podio = new AutoPiloto[3];
-      fecha = null;
    }
 
-   public AutoPiloto[] getPodio() {
-      return podio;
-   }
-   public Piloto conultarPiloto(String dni) {
+   public Piloto consultarPiloto(String dni) {
       for(AutoPiloto p : posiciones) {
          if(dni.equals(p.getPiloto().getDni())) {
             return p.getPiloto();
@@ -39,17 +33,6 @@ public class RegistroCarrera {
    }
    public void agregarCarrera(Carrera c) {
       carrera = c;
-   }
-   public void agregarPodio( int posicion, AutoPiloto p) {
-      podio[posicion] = p;
-   }
-
-   public void setFecha(LocalDate fecha) {
-      this.fecha = fecha;
-   }
-
-   public LocalDate getFecha() {
-      return fecha;
    }
 
    public ArrayList<AutoPiloto> getPosiciones() {

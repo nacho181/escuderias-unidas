@@ -4,10 +4,6 @@ public class Mecanico extends Persona{
     private Especialidad especialidad;
     private int aniosExperiencia;
 
-    public Mecanico(Especialidad especialidad, int aniosExperiencia) {
-        this.especialidad = especialidad;
-        this.aniosExperiencia = aniosExperiencia;
-    }
 
     public Mecanico(String dni, String nombre, String apellido,Pais pais, Especialidad especialidad, int aniosExperiencia) {
         super(dni, nombre, apellido, pais);

@@ -1,6 +1,7 @@
 package controlador;
 
 
+import entidades.Mecanico;
 import entidades.PilotoEscuderia;
 import modelo.Modelo;
 import vista.VentanaPrincipal;
@@ -192,7 +193,7 @@ public class ControladorGestionEscuderia {
         }
 
         // Verificar duplicado
-        for (var m : modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().getMecanicos()) {
+        for(Mecanico m : modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().getMecanicos()) {
             if (m.getDni().equals(dni)) {
                 JOptionPane.showMessageDialog(null, "El mecánico ya pertenece a esta escudería.");
                 return;

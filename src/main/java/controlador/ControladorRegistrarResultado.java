@@ -161,10 +161,8 @@ public class ControladorRegistrarResultado {
             if (pos == 1) {
                 piloto.setVictorias(piloto.getVictorias() + 1);
                 piloto.setPodios(piloto.getPodios() + 1);
-                registroCarrera.agregarPodio(0, autoPiloto);
             } else if (pos == 2 || pos == 3) {
                 piloto.setPodios(piloto.getPodios() + 1);
-                registroCarrera.agregarPodio(pos - 1, autoPiloto);
             }
         }
 
@@ -178,7 +176,6 @@ public class ControladorRegistrarResultado {
         Carrera carrera = new Carrera(fecha, base.getNumeroVueltas(), base.getHoraRealizacion(), base.getTotalCarrerasCorridas(),base.getCircuito(), resultados);
 
         registroCarrera.agregarCarrera(carrera);
-        registroCarrera.setFecha(fecha);
         modelo.agregarCarrerasResultado(registroCarrera);
 
         // Eliminar carrera base del main.java.modelo (ya registrada con resultados)
