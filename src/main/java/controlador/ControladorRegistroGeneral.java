@@ -133,7 +133,7 @@ public class ControladorRegistroGeneral {
         String nombreEscuderia = vista.getRegistrarEscuderia().getNombreEscuderiaField().getText();
         String idPaisEscuderia = vista.getRegistrarEscuderia().getIdEscuderiaField().getText();
 
-        if(!Modelo.nombreValido(nombreEscuderia)){
+        if(!Modelo.nombreInvalido(nombreEscuderia)){
             JOptionPane.showMessageDialog(null, "El nombre es solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -145,7 +145,7 @@ public class ControladorRegistroGeneral {
 
         try {
             int numero = Integer.parseInt(idPaisEscuderia);
-            Pais pais = modelo.comprobarPais(numero);
+            Pais pais = modelo.getModeloRegistro().comprobarPais(numero);
 
             if (pais == null) {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");
@@ -188,13 +188,13 @@ public class ControladorRegistroGeneral {
         }
 
         try {
-            if (!Modelo.nombreValido(nombreCircuito)) {
+            if (!Modelo.nombreInvalido(nombreCircuito)) {
                 JOptionPane.showMessageDialog(null, "El nombre del circuito solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             int numeroLongitud = Integer.parseInt(longitudCircuito);
             int numeroPais = Integer.parseInt(idPaisCircuito);
-            Pais pais = modelo.comprobarPais(numeroPais);
+            Pais pais = modelo.getModeloRegistro().comprobarPais(numeroPais);
 
             if (pais == null) {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");
@@ -247,7 +247,7 @@ public class ControladorRegistroGeneral {
         }
 
         try {
-            if (!Modelo.nombreValido(nombre) || !Modelo.nombreValido(apellido)) {
+            if (!Modelo.nombreInvalido(nombre) || !Modelo.nombreInvalido(apellido)) {
                 JOptionPane.showMessageDialog(null, "El nombre y apellido solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -260,7 +260,7 @@ public class ControladorRegistroGeneral {
             int numeroPod = Integer.parseInt(numPod);
             int numeroPuntos = Integer.parseInt(numPuntos);
 
-            Pais pais = modelo.comprobarPais(numeroPais);
+            Pais pais = modelo.getModeloRegistro().comprobarPais(numeroPais);
             if (pais == null) {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");
                 return;
@@ -315,13 +315,13 @@ public class ControladorRegistroGeneral {
         }
 
         try {
-            if (!Modelo.nombreValido(nombre) || !Modelo.nombreValido(apellido)) {
+            if (!Modelo.nombreInvalido(nombre) || !Modelo.nombreInvalido(apellido)) {
                 JOptionPane.showMessageDialog(null, "El nombre y apellido solo puede contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             int numeroPais = Integer.parseInt(idPais);
             int numeroAniosExp = Integer.parseInt(aniosExp);
-            Pais pais = modelo.comprobarPais(numeroPais);
+            Pais pais = modelo.getModeloRegistro().comprobarPais(numeroPais);
 
             if (pais == null) {
                 JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");

@@ -1,7 +1,5 @@
 package vista.planificarCarrera;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistrarCircuito extends JPanel {
@@ -10,7 +8,7 @@ public class RegistrarCircuito extends JPanel {
     private JButton registrarButton;
     private JPanel planCarreraPanel;
 
-    public RegistrarCircuito(VentanaPrincipal ventanaPrincipal) {
+    public RegistrarCircuito() {
         setSize(500,500);
         setVisible(true);
         add(planCarreraPanel);

@@ -21,7 +21,7 @@ import javax.swing.*;
  * </p>
  */
 
-public class Programa {
+    public class Programa {
 
     /**
      * Metodo principal que inicia el programa.

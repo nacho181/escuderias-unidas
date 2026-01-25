@@ -11,7 +11,7 @@ public class Principal extends JPanel {
     private JButton informeGeneralesButton;
     private JLabel tituloPrincipalLabel;
 
-    public Principal(VentanaPrincipal ventanaPrincipal) {
+    public Principal() {
         setVisible(true);
         setSize(500, 500);
         add(panelPrincipal);

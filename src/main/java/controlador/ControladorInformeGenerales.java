@@ -6,7 +6,8 @@ import vista.VentanaPrincipal;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -15,11 +16,10 @@ import java.util.ArrayList;
  * con la información obtenida del main.java.modelo.
  */
 public class ControladorInformeGenerales {
-
     private final Modelo modelo;
     private final VentanaPrincipal vista;
 
-    // Contructor
+    // Constructor
     public ControladorInformeGenerales(Modelo modelo, VentanaPrincipal vista) {
         this.modelo = modelo;
         this.vista = vista;
@@ -99,23 +99,22 @@ public class ControladorInformeGenerales {
             return;
             }
 
-            ArrayList<RegistroCarrera> carreras = modelo.obtenerCarrerasEntreFechas(inicio, fin);
+            ArrayList<Carrera> carreras = modelo.getModeloInformeGenerales().obtenerCarrerasEntreFechas(inicio, fin);
             var tabla = vista.getOpcionUno().getModeloTabla();
             tabla.setRowCount(0);
 
-            for (RegistroCarrera registro : carreras) {
-                Carrera carrera = registro.getCarrera();
-                ArrayList<AutoPiloto> resultados = registro.getPosiciones();
+            for (Carrera carrera : carreras) {
+                List<ResultadoCarrera> resultados = carrera.getResultados();
 
                 for (int i = 0; i < resultados.size(); i++) {
-                    AutoPiloto ap = resultados.get(i);
+                    ResultadoCarrera ap = resultados.get(i);
                     if (ap != null) {
                         tabla.addRow(new Object[]{
                                 carrera.getFechaRealizacion(),
                                 carrera.getCircuito().getNombre(),
                                 carrera.getNumeroVueltas(),
                                 carrera.getHoraRealizacion(),
-                                ap.getPiloto().getApellido(),
+                                ap.getAutoPiloto().getPiloto().getApellido(),
                                 i + 1
                         });
                     }
@@ -150,15 +149,7 @@ public class ControladorInformeGenerales {
             }
 
             // Ordenar de mayor a menor por puntos
-            for (int i = 0; i < pilotos.size() - 1; i++) {
-                for (int j = i + 1; j < pilotos.size(); j++) {
-                    if (pilotos.get(i).getPuntosAcumulados() < pilotos.get(j).getPuntosAcumulados()) {
-                        Piloto temp = pilotos.get(i);
-                        pilotos.set(i, pilotos.get(j));
-                        pilotos.set(j, temp);
-                    }
-                }
-            }
+            Collections.sort(pilotos);
 
             int pos = 1;
             for (Piloto p : pilotos) {
@@ -179,23 +170,23 @@ public class ControladorInformeGenerales {
      */
     private void opcion3() {
         String dni = vista.getOpcionTres().getDniField().getText();
-        ArrayList<RegistroCarrera> carreras = new ArrayList<>();
+        ArrayList<Carrera> carreras = new ArrayList<>();
 
-        for (RegistroCarrera registro : modelo.getCarrerasResultados()) {
-            if (registro == null) continue;
-            ArrayList<AutoPiloto> posiciones = registro.getPosiciones();
-            if (posiciones == null || posiciones.size() < 3) {
-                continue;
-            }
-            for (int i = 0; i < 3; i++) {
-                AutoPiloto ap = posiciones.get(i);
-                if (ap == null || ap.getPiloto() == null) {
-                    continue;
-                }
-                Piloto pilotoBuscado = modelo.buscarPiloto(dni);
-                if (ap.getPiloto().equals(pilotoBuscado)) {
-                    carreras.add(registro);
-                    break;
+        for (Carrera carrera : modelo.getRegistroGeneral().getCarreras()) {
+            if(carrera.getEstado().equals(EstadoCarrera.FINALIZADA)){
+                List<ResultadoCarrera> posiciones = carrera.getResultados();
+                for (ResultadoCarrera posicion : posiciones) {
+                    if (posicion == null || posicion.getAutoPiloto() == null) {
+                        continue; // pasa a la siguiente posición
+                    }
+                    if (posicion.getPosicion() == 0 || posicion.getPosicion() == 1 || posicion.getPosicion() == 2) {
+                        AutoPiloto ap = posicion.getAutoPiloto();
+                        Piloto pilotoBuscado = modelo.buscarPiloto(dni);
+                        if (ap.getPiloto().equals(pilotoBuscado)) {
+                            carreras.add(carrera);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -209,13 +200,13 @@ public class ControladorInformeGenerales {
             return;
         }
 
-        for (RegistroCarrera reg : carreras) {
+        for (Carrera reg : carreras) {
             tabla.addRow(new Object[]{
                     (reg.consultarPodioPiloto(dni) + 1),
                     reg.consultarPiloto(dni).getNombre(),
                     reg.consultarPiloto(dni).getApellido(),
-                    reg.getCarrera().getFechaRealizacion(),
-                    reg.getCarrera().getCircuito().getNombre()
+                    reg.getFechaRealizacion(),
+                    reg.getCircuito().getNombre()
             });
         }
     }
@@ -260,17 +251,15 @@ public class ControladorInformeGenerales {
         }
 
         // Buscar carreras donde participaron esos autos
-        ArrayList<RegistroCarrera> carrerasEncontradas = new ArrayList<>();
+        ArrayList<Carrera> carrerasEncontradas = new ArrayList<>();
 
-        for (RegistroCarrera reg : modelo.getCarrerasResultados()) {
-            for (AutoPiloto ap : reg.getPosiciones()) {
-                // Validación para evitar NullPointerException
-                if (ap == null || ap.getAuto() == null) {
-                    continue; // salta a la siguiente posición
-                }
-
+        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
+            for (ResultadoCarrera ap : reg.getResultados()) {
                 // Si pasa la validación, sigue la lógica normal
-                if (autosEscuderia.contains(ap.getAuto()) && !carrerasEncontradas.contains(reg)) {
+                if (ap == null || ap.getAutoPiloto().getAuto() == null) {
+                    continue;
+                }
+                if (autosEscuderia.contains(ap.getAutoPiloto().getAuto()) && !carrerasEncontradas.contains(reg)) {
                     carrerasEncontradas.add(reg);
                 }
             }
@@ -279,24 +268,23 @@ public class ControladorInformeGenerales {
 
         // Cargar tabla
         int pos = 1;
-        for (RegistroCarrera reg : carrerasEncontradas) {
-            if (reg == null || reg.getCarrera() == null) {
+        for (Carrera reg : carrerasEncontradas) {
+            if (reg == null) {
                 continue;
             }
-            Carrera c = reg.getCarrera();
-            for (AutoPiloto ap : reg.getPosiciones()) {
+            for (ResultadoCarrera ap : reg.getResultados()) {
                 // Evitar NPE si ap es null o si no tiene auto
-                if (ap == null || ap.getAuto() == null) {
+                if (ap == null || ap.getAutoPiloto().getAuto() == null) {
                     continue;
                 }
-                Auto auto = ap.getAuto();
+                Auto auto = ap.getAutoPiloto().getAuto();
                 if (autosEscuderia.contains(auto)) {
                     tabla.addRow(new Object[]{
                             pos++,
                             auto.getModelo(),
                             auto.getMotor(),
-                            c.getFechaRealizacion(),
-                            c.getCircuito().getNombre()
+                            reg.getFechaRealizacion(),
+                            reg.getCircuito().getNombre()
                     });
                 }
             }
@@ -366,15 +354,15 @@ public class ControladorInformeGenerales {
 
         int contador = 0;
 
-        for (RegistroCarrera reg : modelo.getCarrerasResultados()) {
-            if (reg.getCarrera().getCircuito().getNombre().equalsIgnoreCase(circuito)) {
-                for (AutoPiloto ap : reg.getPosiciones()) {
+        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
+            if (reg.getCircuito().getNombre().equalsIgnoreCase(circuito) && reg.getEstado().equals(EstadoCarrera.FINALIZADA)) {
+                for (ResultadoCarrera ap : reg.getResultados()) {
                     // Validaciones para evitar NullPointerException
-                    if (ap == null || ap.getPiloto() == null) {
+                    if (ap == null || ap.getAutoPiloto().getPiloto() == null) {
                         continue; // pasa a la siguiente posición
                     }
 
-                    if (ap.getPiloto().getDni().equalsIgnoreCase(dni)) {
+                    if (ap.getAutoPiloto().getPiloto().getDni().equalsIgnoreCase(dni)) {
                         contador++;
                     }
                 }
@@ -404,8 +392,8 @@ public class ControladorInformeGenerales {
         String circuito = vista.getOpcionSiete().getNombreCircPanel().getText().trim();
         int contador = 0;
 
-        for (RegistroCarrera reg : modelo.getCarrerasResultados()) {
-            if (reg.getCarrera().getCircuito().getNombre().equalsIgnoreCase(circuito)) {
+        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
+            if (reg.getCircuito().getNombre().equalsIgnoreCase(circuito) && reg.getEstado().equals(EstadoCarrera.FINALIZADA)) {
                 contador++;
             }
         }

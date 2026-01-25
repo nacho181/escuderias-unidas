@@ -1,14 +1,11 @@
 package entidades;
 
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class AutoPiloto {
     private final LocalDate fechaAsignacion;
     private final Piloto piloto;
     private final Auto auto;
-
-    Scanner sc = new Scanner(System.in);
 
 
     public Piloto getPiloto() {
@@ -35,7 +32,6 @@ public class AutoPiloto {
                 "fechaAsignacion='" + fechaAsignacion + '\'' +
                 ", piloto=" + piloto +
                 ", auto=" + auto +
-                ", sc=" + sc +
                 '}';
     }
 }

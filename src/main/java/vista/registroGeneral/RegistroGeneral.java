@@ -1,5 +1,4 @@
 package vista.registroGeneral;
-import vista.VentanaPrincipal;
 import javax.swing.*;
 
 public class RegistroGeneral extends JPanel {
@@ -14,7 +13,7 @@ public class RegistroGeneral extends JPanel {
     private JButton registrarMecanicoButton;
     private JButton registrarPilotoButton;
 
-    public RegistroGeneral(VentanaPrincipal ventanaPrincipal) {
+    public RegistroGeneral() {
         add(panelRegistroGeneral);
         setVisible(true);
         setSize(500, 500);

@@ -1,7 +1,5 @@
 package vista.planificarCarrera;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class SeleccionarEscuderia extends JPanel{
@@ -10,7 +8,7 @@ public class SeleccionarEscuderia extends JPanel{
     private JButton enviarButton;
     private JPanel escuSeleccPanel;
 
-    public SeleccionarEscuderia(VentanaPrincipal ventanaPrincipal) {
+    public SeleccionarEscuderia() {
         setSize(500,500);
         setVisible(true);
         add(escuSeleccPanel);

@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,9 +9,9 @@ public class OpcionCinco extends JPanel{
     private JTable table1;
     private JPanel opcion5Panel;
     private JTextField nombreField;
-    private DefaultTableModel modeloTabla;
+    private final DefaultTableModel modeloTabla;
 
-    public OpcionCinco(VentanaPrincipal ventanaPrincipal){
+    public OpcionCinco(){
         add(opcion5Panel);
         setSize(500,500);
         setVisible(true);

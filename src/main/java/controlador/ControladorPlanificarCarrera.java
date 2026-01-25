@@ -8,7 +8,6 @@ import vista.VentanaPrincipal;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 import static modelo.Modelo.HORA_INPUT;
 import static modelo.Modelo.formatter;
@@ -39,7 +38,7 @@ public class ControladorPlanificarCarrera {
     private void inicializarEventos() {
         // Registro de circuito
         vista.getPlanificarCarrera().getRegistrarButton().addActionListener(e -> registrarCircuito());
-        vista.getPlanificarCarrera().getVolverButton().addActionListener(e -> {limpiarCamposRegistrarCircuito();vista.mostrarPanel("menu");modelo.getModeloPlanificarCarrera().setCircuito(null); });
+        vista.getPlanificarCarrera().getVolverButton().addActionListener(e -> {limpiarCamposRegistrarCircuito();vista.mostrarPanel("menu");modelo.getModeloPlanificarCarrera().getCarrera().setCircuito(null); });
 
         // Configuración de datos de carrera
         vista.getCircuitoSeleccionado().getContinuarConElRegistroButton().addActionListener(e -> circuitoSeleccionado());
@@ -60,10 +59,10 @@ public class ControladorPlanificarCarrera {
      */
     private void registrarCircuito() {
         String nombreCircuito = vista.getPlanificarCarrera().getCircuitoField().getText();
-        Circuito auxCircuito = modelo.buscarCircuito(nombreCircuito);
+        Circuito auxCircuito = modelo.getModeloPlanificarCarrera().buscarCircuito(nombreCircuito);
 
         if (auxCircuito != null) {
-            modelo.getModeloPlanificarCarrera().setCircuito(auxCircuito.getNombre());
+            modelo.getModeloPlanificarCarrera().getCarrera().setCircuito(auxCircuito);
             limpiarCamposRegistrarCircuito();
             vista.mostrarPanel("circuitoSeleccionado");
         } else {
@@ -88,8 +87,8 @@ public class ControladorPlanificarCarrera {
         String totCarreras = vista.getCircuitoSeleccionado().getTotCarreraField().getText();
         String numVueltas = vista.getCircuitoSeleccionado().getNumVueltField().getText();
         String horaCarreraStr = vista.getCircuitoSeleccionado().getHoraCarrera().getText();
-        LocalTime horaCarrera = null;
-        LocalDate fecha = null;
+        LocalTime horaCarrera;
+        LocalDate fecha;
 
         if(fechaStr.isBlank() || totCarreras.isBlank() || numVueltas.isBlank() || horaCarreraStr.isBlank()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -118,11 +117,10 @@ public class ControladorPlanificarCarrera {
             int numeroVueltas = Integer.parseInt(numVueltas);
             int totalCarreras = Integer.parseInt(totCarreras);
 
-            modelo.getModeloPlanificarCarrera().setFecha(fecha);
-            modelo.getModeloPlanificarCarrera().setHora(horaCarrera);
-            modelo.getModeloPlanificarCarrera().setVueltas(numeroVueltas);
-            modelo.getModeloPlanificarCarrera().setTotCarreras(totalCarreras);
-
+            modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(fecha);
+            modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(horaCarrera);
+            modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(numeroVueltas);
+            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(totalCarreras);
             limpiarCampoCircSelecc();
             vista.mostrarPanel("seleccionarEscuderia");
         } catch (NumberFormatException e) {
@@ -177,12 +175,12 @@ public class ControladorPlanificarCarrera {
         );
 
         if (opcion == JOptionPane.YES_OPTION) {
-            modelo.getModeloPlanificarCarrera().setTotCarreras(0);
-            modelo.getModeloPlanificarCarrera().setHora(null);
-            modelo.getModeloPlanificarCarrera().setVueltas(0);
-            modelo.getModeloPlanificarCarrera().setFecha(null);
+            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(0);
+            modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(null);
+            modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(0);
+            modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(null);
+            modelo.getModeloPlanificarCarrera().getCarrera().setCircuito(null);
             modelo.getModeloPlanificarCarrera().setEscuderiaSelecc(null);
-            modelo.getModeloPlanificarCarrera().setCircuito(null);
             limpiarSeleccionarEscuderia();
             vista.mostrarPanel("planificarCarrera");
         }
@@ -199,12 +197,9 @@ public class ControladorPlanificarCarrera {
     private void registrarAutoPilotos() {
         String dniPiloto = vista.getRegistrarAutoPilotos().getDniField().getText();
         String modeloAuto = vista.getRegistrarAutoPilotos().getModeloField().getText();
-        int numVueltas = modelo.getModeloPlanificarCarrera().getVueltas();
-        LocalTime hora = modelo.getModeloPlanificarCarrera().getHora();
-        int totalCarreras = modelo.getModeloPlanificarCarrera().getTotCarreras();
-        Circuito circuito = modelo.buscarCircuito(modelo.getModeloPlanificarCarrera().getCircuito());
+
         // Parseo de la fecha a LocalDate
-        LocalDate fecha = modelo.getModeloPlanificarCarrera().getFecha();
+        LocalDate fecha = modelo.getModeloPlanificarCarrera().getCarrera().getFechaRealizacion();
 
 
         if (dniPiloto.isBlank() || modeloAuto.isBlank()) {
@@ -214,86 +209,65 @@ public class ControladorPlanificarCarrera {
         }
 
         // Variables auxiliares
-        Auto autoSeleccionado = null;
-        boolean autoEncontrado = false;
-        boolean pilotoEncontrado = false;
-        boolean pilotoContratado = false;
-        boolean pilotoOcupado = false;
-        boolean duplicado = false;
 
         // Buscar piloto dentro de la escudería seleccionada
-        PilotoEscuderia pilotoEscuderia = modelo.buscarPilotEscu(modelo.getModeloPlanificarCarrera().getEscuderiaSelecc(), dniPiloto);
-
+        PilotoEscuderia pilotoEscuderia = modelo.getModeloPlanificarCarrera().buscarPilotEscu(modelo.getModeloPlanificarCarrera().getEscuderiaSelecc(), dniPiloto, fecha);
         // Buscar auto dentro de la escudería seleccionada
-        for (Auto auto : modelo.getModeloPlanificarCarrera().getEscuderiaSelecc().getAutos()) {
-            if (auto.getModelo().equalsIgnoreCase(modeloAuto)) {
-                autoSeleccionado = auto;
-                autoEncontrado = true;
-                break;
-            }
-        }
+        Auto autoSeleccionado = modelo.getModeloPlanificarCarrera().verificarAuto(modeloAuto);
 
-        // Validaciones sobre el piloto
-        if (pilotoEscuderia != null) {
-            pilotoEncontrado = true;
-
-            // Verificar contrato vigente
-            if (fecha.isAfter(pilotoEscuderia.getDesdeFecha()) &&
-                    fecha.isBefore(pilotoEscuderia.getHastaFecha())) {
-                pilotoContratado = true;
-                pilotoOcupado = modelo.comprobarAutoPiloto(dniPiloto, fecha);
-            }
-
-            // Verificar duplicado en la misma carrera
-            for (AutoPiloto ap : modelo.getModeloPlanificarCarrera().getCarrera()) {
-                if (ap.getFechaAsignacion().equals(fecha) &&
-                        (ap.getPiloto().equals(pilotoEscuderia.getPiloto()) || ap.getAuto().equals(autoSeleccionado))) {
-                    duplicado = true;
-                    break;
-                }
-            }
-        }
-
-        // Mensajes de error específicos
-        if (duplicado) {
-            JOptionPane.showMessageDialog(null, "El piloto o auto ya fue registrado en esta carrera.");
+        if (pilotoEscuderia == null) {
+            JOptionPane.showMessageDialog(null, "El piloto no presenta contrato para esa fecha.");
             limpiarRegistrarAutoPilotos();
             return;
         }
-        if (!pilotoEncontrado) {
-            JOptionPane.showMessageDialog(null, "El piloto no pertenece a esta escudería.");
-            limpiarRegistrarAutoPilotos();
-            return;
-        }
-        if (!autoEncontrado) {
+
+        if (autoSeleccionado == null){
             JOptionPane.showMessageDialog(null, "El auto no pertenece a esta escudería.");
             limpiarRegistrarAutoPilotos();
             return;
         }
-        if (!pilotoContratado) {
-            JOptionPane.showMessageDialog(null, "El contrato del piloto no está vigente para esta fecha.");
-            limpiarRegistrarAutoPilotos();
-            return;
-        }
-        if (pilotoOcupado) {
+
+        if (modelo.getModeloPlanificarCarrera().comprobarAutoPiloto(dniPiloto, fecha)) {
             JOptionPane.showMessageDialog(null, "El piloto ya está asignado a otra carrera en esa fecha.");
             limpiarRegistrarAutoPilotos();
             return;
         }
 
-        // Registrar AutoPiloto válido
-        modelo.getModeloPlanificarCarrera().agregarAutoPiloto(new AutoPiloto(fecha, pilotoEscuderia.getPiloto(), autoSeleccionado));
-        ArrayList<AutoPiloto> autosPilotos = modelo.getModeloPlanificarCarrera().getCarrera();
+            // Verificar duplicado en la misma carrera
+        if (modelo.getModeloPlanificarCarrera().verificarDuplicados(pilotoEscuderia, autoSeleccionado)) {
+            JOptionPane.showMessageDialog(null, "El piloto o auto ya fue registrado en esta carrera.");
+            limpiarRegistrarAutoPilotos();
+            return;
+        }
 
+
+        // Registrar AutoPiloto válido
+
+        modelo.getModeloPlanificarCarrera().agregarPilotosAux
+                (new ParticipacionCarrera
+                        (new Carrera(modelo.getModeloPlanificarCarrera().getCarrera().getFechaRealizacion(),
+                                modelo.getModeloPlanificarCarrera().getCarrera().getHoraRealizacion(),
+                                modelo.getModeloPlanificarCarrera().getCarrera().getCircuito(),
+                                modelo.getModeloPlanificarCarrera().getCarrera().getTotalCarrerasCorridas(),
+                                modelo.getModeloPlanificarCarrera().getCarrera().getNumeroVueltas()),
+                        new AutoPiloto(fecha, pilotoEscuderia.getPiloto(), autoSeleccionado)));
         // Si es el primer registro, se crea la carrera completa
-        if (modelo.getModeloPlanificarCarrera().getCarrera().size() == 1) {
-            modelo.agregarCarrera(new Carrera(fecha, numVueltas, hora, totalCarreras, circuito, autosPilotos));
-            modelo.getModeloPlanificarCarrera().reiniciarCarrera();
-            modelo.getModeloPlanificarCarrera().setTotCarreras(0);
-            modelo.getModeloPlanificarCarrera().setHora(null);
-            modelo.getModeloPlanificarCarrera().setVueltas(0);
-            modelo.getModeloPlanificarCarrera().setCircuito(null);
-            modelo.getModeloPlanificarCarrera().setFecha(null);
+
+        if (modelo.getModeloPlanificarCarrera().getPilotosAux().size() == 1) {
+            modelo.getModeloPlanificarCarrera().getCarrera().agregarParticipantes(modelo.getModeloPlanificarCarrera().getPilotosAux());
+            Carrera carreraDefinitiva = new Carrera(modelo.getModeloPlanificarCarrera().getCarrera().getFechaRealizacion(),
+                    modelo.getModeloPlanificarCarrera().getCarrera().getHoraRealizacion(),
+                    modelo.getModeloPlanificarCarrera().getCarrera().getCircuito(),
+                    modelo.getModeloPlanificarCarrera().getCarrera().getTotalCarrerasCorridas(),
+                    modelo.getModeloPlanificarCarrera().getCarrera().getNumeroVueltas());
+                    carreraDefinitiva.agregarParticipantes(modelo.getModeloPlanificarCarrera().getPilotosAux());
+            modelo.agregarCarrera(carreraDefinitiva);
+            modelo.getModeloPlanificarCarrera().reiniciarPilotosAux();
+            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(0);
+            modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(null);
+            modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(0);
+            modelo.getModeloPlanificarCarrera().getCarrera().setCircuito(null);
+            modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(null);
             modelo.getModeloPlanificarCarrera().setEscuderiaSelecc(null);
             JOptionPane.showMessageDialog(null, "Carrera registrada exitosamente. Retornando al menú principal.");
             vista.mostrarPanel("menu");

@@ -1,7 +1,5 @@
 package vista.registroResultados;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistroResultados extends JPanel {
@@ -10,7 +8,7 @@ public class RegistroResultados extends JPanel {
     private JButton enviarButton;
     private JPanel regResultPanel;
 
-    public RegistroResultados(VentanaPrincipal ventanaPrincipal) {
+    public RegistroResultados() {
         setSize(500, 500);
         setVisible(true);
         add(regResultPanel);

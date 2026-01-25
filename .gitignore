@@ -67,3 +67,6 @@
 /src/target/classes/com/intellij/uiDesigner/core/Util.class
 /src/target/classes/vista/VentanaPrincipal.class
 /src/target/classes/com/intellij/uiDesigner/core/VerticalInfo.class
+/src/target/classes/entidades/EstadoCarrera.class
+/src/target/classes/entidades/ParticipacionCarrera.class
+/src/target/classes/entidades/ResultadoCarrera.class

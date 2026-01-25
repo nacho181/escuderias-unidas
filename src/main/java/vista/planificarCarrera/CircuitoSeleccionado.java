@@ -1,7 +1,5 @@
 package vista.planificarCarrera;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class CircuitoSeleccionado extends JPanel{
@@ -13,7 +11,7 @@ public class CircuitoSeleccionado extends JPanel{
     private JButton continuarConElRegistroButton;
     private JPanel circSeleccPanel;
 
-    public CircuitoSeleccionado(VentanaPrincipal ventanaPrincipal){
+    public CircuitoSeleccionado(){
         setSize(500,500);
         setVisible(true);
         add(circSeleccPanel);

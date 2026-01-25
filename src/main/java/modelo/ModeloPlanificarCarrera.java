@@ -1,68 +1,97 @@
 package modelo;
 
-import entidades.AutoPiloto;
-import entidades.Escuderia;
+import entidades.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ModeloPlanificarCarrera {
-    private Modelo modelo;
-    private LocalDate fecha;
-    private int vueltas;
-    private LocalTime hora;
-    private int totCarreras;
+    private final Modelo modelo;
+    private final Carrera carrera;
     private Escuderia escuderiaSelecc;
-    private String circuito;
-    private ArrayList<AutoPiloto> carrera;
+    private ArrayList<ParticipacionCarrera> pilotosAux;
 
     public ModeloPlanificarCarrera(Modelo modelo) {
         this.modelo = modelo;
-        fecha =  null;
-        vueltas = 0;
-        hora = null;
-        totCarreras = 0;
-        circuito = null;
-        carrera = new ArrayList<>();
+        carrera = new Carrera();
+        pilotosAux = new ArrayList<>();
+    }
+
+    /** Busca un piloto asociado a una escudería por DNI. */
+    public PilotoEscuderia buscarPilotEscu(Escuderia escuderia, String dni, LocalDate fecha) {
+        for (Escuderia e : modelo.getRegistroGeneral().getEscuderias()) {
+            if (escuderia.equals(e)) {
+                for (PilotoEscuderia p : e.getPilotos()) {
+                    if (p.getPiloto().getDni().equals(dni) && fecha.isAfter(p.getDesdeFecha()) &&
+                            fecha.isBefore(p.getHastaFecha())) {
+                        return p;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /** Busca un circuito por nombre. */
+    public Circuito buscarCircuito(String nombre) {
+        for (Circuito c : modelo.getRegistroGeneral().getCircuitos()) {
+            if (nombre.equals(c.getNombre())) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Comprueba si un piloto ya tiene un auto asignado en una fecha determinada.
+     * @return true si el piloto tiene un auto asignado en esa fecha.
+     */
+    public boolean comprobarAutoPiloto(String dni, LocalDate fecha) {
+        for(Carrera c : modelo.getRegistroGeneral().getCarreras()) {
+            if((EstadoCarrera.PROGRAMADA).equals(c.getEstado())) {
+                for (ParticipacionCarrera a : c.getParticipantes()) {
+                    if (a.getAutoPiloto().getPiloto().getDni().equals(dni) && a.getAutoPiloto().getFechaAsignacion().equals(fecha)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean verificarDuplicados(PilotoEscuderia pilotoEscuderia, Auto autoSeleccionado) {
+        for (ParticipacionCarrera ap : pilotosAux) {
+            if (ap.getAutoPiloto().getFechaAsignacion().equals(carrera.getFechaRealizacion()) &&
+                    (ap.getAutoPiloto().getPiloto().equals(pilotoEscuderia.getPiloto()) || ap.getAutoPiloto().getAuto().equals(autoSeleccionado))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Auto verificarAuto(String modelo) {
+        Auto autoSeleccionado = null;
+        for (Auto auto : escuderiaSelecc.getAutos()) {
+            if (auto.getModelo().equalsIgnoreCase(modelo)) {
+                autoSeleccionado = auto;
+                return autoSeleccionado;
+            }
+        }
+        return autoSeleccionado;
+    }
+
+    public ArrayList<ParticipacionCarrera> getPilotosAux() {
+        return pilotosAux;
+    }
+
+    public void reiniciarPilotosAux() {
+        this.pilotosAux = new ArrayList<>();
+        carrera.setParticipantes(new ArrayList<>());
     }
 
 
-    public ArrayList<AutoPiloto> getCarrera() {
-        return carrera;
-    }
-
-    public void reiniciarCarrera() {
-        this.carrera = new ArrayList<>();
-    }
-
-
-    public void agregarAutoPiloto(AutoPiloto autoPiloto) {
-        carrera.add(autoPiloto);
-    }
-
-    public String getCircuito() {
-        return circuito;
-    }
-
-    public void setCircuito(String circuito) {
-        this.circuito = circuito;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public void setVueltas(int vueltas) {
-        this.vueltas = vueltas;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
-    }
-
-    public void setTotCarreras(int totCarreras) {
-        this.totCarreras = totCarreras;
+    public void agregarPilotosAux(ParticipacionCarrera autoPiloto) {
+        pilotosAux.add(autoPiloto);
     }
 
     public void setEscuderiaSelecc(Escuderia escuderiaSelecc) {
@@ -73,20 +102,8 @@ public class ModeloPlanificarCarrera {
         return modelo;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public int getVueltas() {
-        return vueltas;
-    }
-
-    public LocalTime getHora() {
-        return hora;
-    }
-
-    public int getTotCarreras() {
-        return totCarreras;
+    public Carrera getCarrera() {
+        return carrera;
     }
 
     public Escuderia getEscuderiaSelecc() {

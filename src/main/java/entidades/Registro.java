@@ -1,21 +1,16 @@
 package entidades;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Registro {
 
-    private ArrayList<Persona> personas;
-    private ArrayList<Auto> autos;
-    private ArrayList<Escuderia> escuderias;
-    private ArrayList<Circuito> circuitos;
-    private ArrayList<Pais> paises;
-    private Carrera carrera;
-    private ArrayList<AutoPiloto> autoPilotos;
-    private ArrayList<RegistroCarrera> registroCarrera;
-    private ArrayList<AutoPiloto> podio;
-    private ArrayList<Carrera> carreras;
-    private ArrayList<PilotoEscuderia> pilotoEscuderias;
+    private final ArrayList<Persona> personas;
+    private final ArrayList<Auto> autos;
+    private final ArrayList<Escuderia> escuderias;
+    private final ArrayList<Circuito> circuitos;
+    private final ArrayList<Pais> paises;
+    private final ArrayList<Carrera> carreras;
+    private final ArrayList<PilotoEscuderia> pilotoEscuderias;
 
     public Registro() {
         personas = new ArrayList<>();
@@ -23,36 +18,8 @@ public class Registro {
         escuderias = new ArrayList<>();
         circuitos = new ArrayList<>();
         paises = new ArrayList<>();
-        podio = new ArrayList<>();
         carreras = new ArrayList<>();
-        registroCarrera = new ArrayList<>();
         pilotoEscuderias = new ArrayList<>();
-        autoPilotos = new ArrayList<>();
-    }
-
-    public Registro(Carrera carrera, ArrayList<AutoPiloto> posiciones, ArrayList<AutoPiloto> podio) {
-        this.carrera = carrera;
-        carrera.setTotalCarrerasCorridas(carrera.getTotalCarrerasCorridas() + 1);
-        this.podio = podio;
-        carreras.add(carrera);
-    }
-
-    public void informeFechas(LocalDate fechaInicial, LocalDate fechaFinal) {
-        for(Carrera carrera: carreras){
-            LocalDate numAux = carrera.getFechaRealizacion();
-            if(numAux.isAfter(fechaInicial) && numAux.isBefore(fechaFinal)){
-                System.out.println(carrera);
-            }
-        }
-    }
-
-
-    public ArrayList<RegistroCarrera> getRegistroCarrera() {
-        return registroCarrera;
-    }
-
-    public ArrayList<AutoPiloto> getAutoPilotos() {
-        return autoPilotos;
     }
 
     public ArrayList<Persona> getPersonas() {
@@ -101,9 +68,6 @@ public class Registro {
     }
     public void agregarPilotoEscuderias(PilotoEscuderia p) {
         pilotoEscuderias.add(p);
-    }
-    public void agregarRegistroCarrera(RegistroCarrera r) {
-        registroCarrera.add(r);
     }
     public void agregarCarrera(Carrera c) {
         carreras.add(c);

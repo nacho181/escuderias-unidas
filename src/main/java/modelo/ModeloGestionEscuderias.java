@@ -1,14 +1,26 @@
 package modelo;
 
 import entidades.Escuderia;
+import entidades.Mecanico;
+import entidades.Persona;
 
 public class ModeloGestionEscuderias {
-    private Modelo modelo;
+    private final Modelo modelo;
     private Escuderia escuderiaSeleccionada;
 
     public ModeloGestionEscuderias(Modelo modelo) {
         this.modelo = modelo;
         escuderiaSeleccionada = null;
+    }
+
+    /** Busca un mecánico por DNI. */
+    public Mecanico buscarMecanico(String dni) {
+        for (Persona persona : modelo.getRegistroGeneral().getPersonas()) {
+            if (persona instanceof Mecanico m && persona.getDni().equals(dni)) {
+                return m;
+            }
+        }
+        return null;
     }
 
     public Escuderia getEscuderiaSeleccionada() {

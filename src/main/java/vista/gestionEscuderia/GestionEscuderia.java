@@ -1,7 +1,5 @@
 package vista.gestionEscuderia;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class GestionEscuderia extends JPanel{
@@ -10,7 +8,7 @@ public class GestionEscuderia extends JPanel{
     private JButton volverButton;
     private JPanel gestionEscuderiaPanel;
 
-    public GestionEscuderia(VentanaPrincipal ventanaPrincipal) {
+    public GestionEscuderia() {
         setVisible(true);
         setSize(500, 500);
         add(gestionEscuderiaPanel);

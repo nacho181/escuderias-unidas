@@ -66,7 +66,7 @@ public class ControladorGestionEscuderia {
     private void seleccionarEscuderia() {
         String nombreEscuderia = vista.getGestionEscuderia().getNombreField().getText();
 
-        if (nombreEscuderia == null || nombreEscuderia.isEmpty()) {
+        if (nombreEscuderia == null || nombreEscuderia.isBlank()) {
             JOptionPane.showMessageDialog(null, "Complete todos los campos");
             return;
         }
@@ -187,7 +187,7 @@ public class ControladorGestionEscuderia {
             return;
         }
 
-        if (modelo.buscarMecanico(dni) == null) {
+        if (modelo.getModeloGestionEscuderias().buscarMecanico(dni) == null) {
             JOptionPane.showMessageDialog(null, "El mecánico no existe en el sistema.");
             return;
         }
@@ -201,7 +201,7 @@ public class ControladorGestionEscuderia {
         }
 
         // Registrar
-        modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().agregarMecanico(modelo.buscarMecanico(dni));
+        modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().agregarMecanico(modelo.getModeloGestionEscuderias().buscarMecanico(dni));
         JOptionPane.showMessageDialog(null, "Mecánico agregado correctamente.");
         limpiarCampoMecanico();
     }

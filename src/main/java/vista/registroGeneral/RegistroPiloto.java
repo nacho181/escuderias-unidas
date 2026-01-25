@@ -1,7 +1,5 @@
 package vista.registroGeneral;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistroPiloto extends JPanel {
@@ -19,11 +17,10 @@ public class RegistroPiloto extends JPanel {
     private JButton volverButton;
     private JButton registrarButton;
 
-    public RegistroPiloto(VentanaPrincipal ventanaPrincipal) {
+    public RegistroPiloto() {
         setVisible(true);
         add(registroPilotoPanel);
         setSize(500, 500);
-        volverButton.addActionListener(e -> ventanaPrincipal.mostrarPanel("registro"));
     }
 
     public JButton getVolverButton() {

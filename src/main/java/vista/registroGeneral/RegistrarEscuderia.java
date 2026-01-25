@@ -1,6 +1,5 @@
 package vista.registroGeneral;
 
-import vista.VentanaPrincipal;
 
 import javax.swing.*;
 
@@ -11,11 +10,10 @@ public class RegistrarEscuderia extends JPanel {
     private JButton volverButton;
     private JPanel escuderiaPanel;
 
-    public RegistrarEscuderia(VentanaPrincipal ventanaPrincipal) {
+    public RegistrarEscuderia() {
         add(escuderiaPanel);
         setSize(500,500);
         setVisible(true);
-
     }
 
     public JButton getRegistrarButton() {

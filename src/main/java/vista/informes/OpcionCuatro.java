@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,9 +9,9 @@ public class OpcionCuatro extends JPanel{
     private JButton enviarButton;
     private JTable table1;
     private JPanel opcionCuatroPanel;
-    private DefaultTableModel modeloTabla;
+    private final DefaultTableModel modeloTabla;
 
-    public OpcionCuatro(VentanaPrincipal ventanaPrincipal){
+    public OpcionCuatro(){
         add(opcionCuatroPanel);
         setSize(500,500);
         setVisible(true);

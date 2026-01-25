@@ -1,7 +1,5 @@
 package vista.registroGeneral;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistroPaises extends JPanel{
@@ -12,7 +10,7 @@ public class RegistroPaises extends JPanel{
     private JButton registrarButton;
     private JButton volverButton;
 
-    public RegistroPaises(VentanaPrincipal ventanaPrincipal) {
+    public RegistroPaises() {
         add(registroPaisesPanel);
         setVisible(true);
         setSize(500,500);

@@ -1,9 +1,9 @@
 package vista.registroResultados;
 
 import entidades.AutoPiloto;
+import entidades.ParticipacionCarrera;
 import entidades.Piloto;
 import entidades.Posicion;
-import vista.VentanaPrincipal;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,10 +30,8 @@ public class SeleccionarPosiciones extends JPanel {
 
     /**
      * Constructor que inicializa la main.java.vista y su tabla.
-     *
-     * @param ventanaPrincipal referencia a la ventana principal del sistema.
      */
-    public SeleccionarPosiciones(VentanaPrincipal ventanaPrincipal) {
+    public SeleccionarPosiciones() {
         add(seleccPosPanel);
         setVisible(true);
         setSize(500, 500);
@@ -90,15 +88,15 @@ public class SeleccionarPosiciones extends JPanel {
      *
      * @param pilotos lista de objetos {@link AutoPiloto} con los datos a mostrar.
      */
-    public void cargarPilotos(List<AutoPiloto> pilotos) {
+    public void cargarPilotos(List<ParticipacionCarrera> pilotos) {
         modeloTabla.setRowCount(0); // Limpiar antes de cargar
 
-        for (AutoPiloto autoPiloto : pilotos) {
-            Piloto p = autoPiloto.getPiloto();
+        for (ParticipacionCarrera participante : pilotos) {
+            Piloto p = participante.getAutoPiloto().getPiloto();
             modeloTabla.addRow(new Object[]{
                     p.getDni(),                         // Columna 0: DNI
                     p.getApellido(),                    // Columna 1: Apellido
-                    autoPiloto.getAuto().getModelo(),   // Columna 2: Modelo del auto
+                    participante.getAutoPiloto().getAuto().getModelo(),   // Columna 2: Modelo del auto
                     null,                               // Columna 3: Posición (editable)
                     0                                   // Columna 4: Puntos iniciales
             });
@@ -137,8 +135,5 @@ public class SeleccionarPosiciones extends JPanel {
 
     public JButton getVolverButton() {
         return volverButton;
-    }
-    public JTable getTablaPilotos() {
-        return tablaPilotos;
     }
 }

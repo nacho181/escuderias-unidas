@@ -1,7 +1,5 @@
 package vista.registroGeneral;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistroCircuito extends JPanel{
@@ -12,7 +10,7 @@ public class RegistroCircuito extends JPanel{
     private JButton volverButton;
     private JPanel registroCircuitoPanel;
 
-    public RegistroCircuito(VentanaPrincipal ventanaPrincipal) {
+    public RegistroCircuito() {
         setVisible(true);
         add(registroCircuitoPanel);
         setSize(500, 500);

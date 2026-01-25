@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -10,9 +8,9 @@ public class OpcionDos extends JPanel{
     private JButton volverButton;
     private JTable table1;
     private JPanel opcionDosPanel;
-    private DefaultTableModel modeloTabla;
+    private final DefaultTableModel modeloTabla;
 
-    public OpcionDos(VentanaPrincipal ventanaPrincipal) {
+    public OpcionDos() {
         add(opcionDosPanel);
         setVisible(true);
         setSize(500,500);

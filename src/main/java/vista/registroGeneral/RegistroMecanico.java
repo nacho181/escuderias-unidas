@@ -1,7 +1,6 @@
 package vista.registroGeneral;
 
 import entidades.Especialidad;
-import vista.VentanaPrincipal;
 
 import javax.swing.*;
 
@@ -16,7 +15,7 @@ public class RegistroMecanico extends JPanel{
     private JButton volverButton;
     private JTextField dniField;
 
-    public RegistroMecanico(VentanaPrincipal ventanaPrincipal) {
+    public RegistroMecanico() {
         setVisible(true);
         add(registroMecanicoPanel);
         setSize(500, 500);

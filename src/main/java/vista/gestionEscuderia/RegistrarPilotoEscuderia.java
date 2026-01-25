@@ -1,7 +1,5 @@
 package vista.gestionEscuderia;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistrarPilotoEscuderia extends JPanel{
@@ -12,7 +10,7 @@ public class RegistrarPilotoEscuderia extends JPanel{
     private JButton registrarButton;
     private JPanel registrarPilotoEscuderiaPanel;
 
-    public RegistrarPilotoEscuderia(VentanaPrincipal ventanaPrincipal) {
+    public RegistrarPilotoEscuderia() {
         setSize(500,500);
         setVisible(true);
         add(registrarPilotoEscuderiaPanel);

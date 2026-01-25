@@ -22,54 +22,54 @@ import java.util.Objects;
 public class VentanaPrincipal extends JFrame {
 
     /** Layout que permite alternar entre los distintos paneles del sistema. */
-    private CardLayout cardLayout;
+    private final CardLayout cardLayout;
 
     /** Contenedor principal que alberga los paneles asociados al CardLayout. */
-    private JPanel contenedor;
+    private final JPanel contenedor;
 
     /** Panel principal del menú de inicio. */
-    private Principal panelMenu;
+    private final Principal panelMenu;
 
     // Opción 1: Registro general
 
-    private RegistroGeneral registroGeneral;
-    private RegistroPaises registroPaises;
-    private RegistroAuto registroAuto;
-    private RegistrarEscuderia registrarEscuderia;
-    private RegistroCircuito registroCircuito;
-    private RegistroMecanico registroMecanico;
-    private RegistroPiloto registroPiloto;
+    private final RegistroGeneral registroGeneral;
+    private final RegistroPaises registroPaises;
+    private final RegistroAuto registroAuto;
+    private final RegistrarEscuderia registrarEscuderia;
+    private final RegistroCircuito registroCircuito;
+    private final RegistroMecanico registroMecanico;
+    private final RegistroPiloto registroPiloto;
 
     // Opción 2: Gestión de escuderías
 
-    private GestionEscuderia gestionEscuderia;
-    private EscuderiaSeleccionada escuderiaSeleccionada;
-    private RegistrarEscuderiaAuto registrarEscuderiaAuto;
-    private RegistrarMecanicoEscuderia registrarMecanicoEscuderia;
-    private RegistrarPilotoEscuderia registrarPilotoEscuderia;
+    private final GestionEscuderia gestionEscuderia;
+    private final EscuderiaSeleccionada escuderiaSeleccionada;
+    private final RegistrarEscuderiaAuto registrarEscuderiaAuto;
+    private final RegistrarMecanicoEscuderia registrarMecanicoEscuderia;
+    private final RegistrarPilotoEscuderia registrarPilotoEscuderia;
 
     // Opción 3: Planificación de carreras
 
-    private RegistrarCircuito planificarCarrera;
-    private CircuitoSeleccionado circuitoSeleccionado;
-    private RegistrarAutoPilotos registrarPilotos;
-    private SeleccionarEscuderia seleccionarEscuderia;
+    private final RegistrarCircuito planificarCarrera;
+    private final CircuitoSeleccionado circuitoSeleccionado;
+    private final RegistrarAutoPilotos registrarPilotos;
+    private final SeleccionarEscuderia seleccionarEscuderia;
 
     // Opción 4: Registro de resultados
 
-    private RegistroResultados registroResultados;
-    private SeleccionarPosiciones seleccionarPosiciones;
+    private final RegistroResultados registroResultados;
+    private final SeleccionarPosiciones seleccionarPosiciones;
 
     // Opción 5: Informes
 
-    private SeleccionInformes seleccionInformes;
-    private OpcionUno opcionUno;
-    private OpcionDos opcionDos;
-    private OpcionTres opcionTres;
-    private OpcionCuatro opcionCuatro;
-    private OpcionCinco opcionCinco;
-    private OpcionSeis opcionSeis;
-    private OpcionSiete opcionSiete;
+    private final SeleccionInformes seleccionInformes;
+    private final OpcionUno opcionUno;
+    private final OpcionDos opcionDos;
+    private final OpcionTres opcionTres;
+    private final OpcionCuatro opcionCuatro;
+    private final OpcionCinco opcionCinco;
+    private final OpcionSeis opcionSeis;
+    private final OpcionSiete opcionSiete;
 
     /**
      * Constructor de la clase VentanaPrincipal.
@@ -89,43 +89,43 @@ public class VentanaPrincipal extends JFrame {
         contenedor = new JPanel(cardLayout);
 
         // Panel principal del menú
-        panelMenu = new Principal(this);
+        panelMenu = new Principal();
 
         // Inicialización de paneles de la opción 1
-        registroGeneral = new RegistroGeneral(this);
-        registroPaises = new RegistroPaises(this);
-        registroAuto = new RegistroAuto(this);
-        registrarEscuderia = new RegistrarEscuderia(this);
-        registroCircuito = new RegistroCircuito(this);
-        registroMecanico = new RegistroMecanico(this);
-        registroPiloto = new RegistroPiloto(this);
+        registroGeneral = new RegistroGeneral();
+        registroPaises = new RegistroPaises();
+        registroAuto = new RegistroAuto();
+        registrarEscuderia = new RegistrarEscuderia();
+        registroCircuito = new RegistroCircuito();
+        registroMecanico = new RegistroMecanico();
+        registroPiloto = new RegistroPiloto();
 
         // Inicialización de paneles de la opción 2
-        gestionEscuderia = new GestionEscuderia(this);
-        escuderiaSeleccionada = new EscuderiaSeleccionada(this);
-        registrarEscuderiaAuto = new RegistrarEscuderiaAuto(this);
-        registrarMecanicoEscuderia = new RegistrarMecanicoEscuderia(this);
-        registrarPilotoEscuderia = new RegistrarPilotoEscuderia(this);
+        gestionEscuderia = new GestionEscuderia();
+        escuderiaSeleccionada = new EscuderiaSeleccionada();
+        registrarEscuderiaAuto = new RegistrarEscuderiaAuto();
+        registrarMecanicoEscuderia = new RegistrarMecanicoEscuderia();
+        registrarPilotoEscuderia = new RegistrarPilotoEscuderia();
 
         // Inicialización de paneles de la opción 3
-        planificarCarrera = new RegistrarCircuito(this);
-        circuitoSeleccionado = new CircuitoSeleccionado(this);
-        registrarPilotos = new RegistrarAutoPilotos(this);
-        seleccionarEscuderia = new SeleccionarEscuderia(this);
+        planificarCarrera = new RegistrarCircuito();
+        circuitoSeleccionado = new CircuitoSeleccionado();
+        registrarPilotos = new RegistrarAutoPilotos();
+        seleccionarEscuderia = new SeleccionarEscuderia();
 
         // Inicialización de paneles de la opción 4
-        registroResultados = new RegistroResultados(this);
-        seleccionarPosiciones = new SeleccionarPosiciones(this);
+        registroResultados = new RegistroResultados();
+        seleccionarPosiciones = new SeleccionarPosiciones();
 
         // Inicialización de paneles de la opción 5
-        seleccionInformes = new SeleccionInformes(this);
-        opcionUno = new OpcionUno(this);
-        opcionDos = new OpcionDos(this);
-        opcionTres = new OpcionTres(this);
-        opcionCuatro = new OpcionCuatro(this);
-        opcionCinco = new OpcionCinco(this);
-        opcionSeis = new OpcionSeis(this);
-        opcionSiete = new OpcionSiete(this);
+        seleccionInformes = new SeleccionInformes();
+        opcionUno = new OpcionUno();
+        opcionDos = new OpcionDos();
+        opcionTres = new OpcionTres();
+        opcionCuatro = new OpcionCuatro();
+        opcionCinco = new OpcionCinco();
+        opcionSeis = new OpcionSeis();
+        opcionSiete = new OpcionSiete();
 
         // Registro de los paneles en el contenedor
 

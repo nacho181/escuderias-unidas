@@ -1,7 +1,5 @@
 package vista.planificarCarrera;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class RegistrarAutoPilotos extends JPanel{
@@ -11,7 +9,7 @@ public class RegistrarAutoPilotos extends JPanel{
     private JButton registrarButton;
     private JPanel RegPilPanel;
 
-    public RegistrarAutoPilotos(VentanaPrincipal ventanaPrincipal) {
+    public RegistrarAutoPilotos() {
         setSize(500,500);
         setVisible(true);
         add(RegPilPanel);

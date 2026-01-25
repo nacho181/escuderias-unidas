@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class OpcionSiete extends JPanel{
@@ -10,7 +8,7 @@ public class OpcionSiete extends JPanel{
     private JButton volverButton;
     private JPanel opcion7Panel;
 
-    public OpcionSiete(VentanaPrincipal ventanaPrincipal) {
+    public OpcionSiete() {
         add(opcion7Panel);
         setSize(500,500);
         setVisible(true);

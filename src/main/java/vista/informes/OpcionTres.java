@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,9 +9,9 @@ public class OpcionTres extends JPanel{
     private JButton volverButton;
     private JButton enviarButton;
     private JPanel opcionTresPanel;
-    private DefaultTableModel modeloTabla;
+    private final DefaultTableModel modeloTabla;
 
-    public OpcionTres(VentanaPrincipal ventanaPrincipal) {
+    public OpcionTres() {
         add(opcionTresPanel);
         setVisible(true);
         setSize(500, 500);

@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 
 public class SeleccionInformes extends JPanel{
@@ -15,7 +13,7 @@ public class SeleccionInformes extends JPanel{
     private JButton volverButton;
     private JPanel seleccionInfPanel;
 
-    public SeleccionInformes(VentanaPrincipal ventanaPrincipal) {
+    public SeleccionInformes() {
         add(seleccionInfPanel);
         setVisible(true);
         setSize(500,500);

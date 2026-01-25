@@ -1,7 +1,5 @@
 package vista.informes;
 
-import vista.VentanaPrincipal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,19 +10,15 @@ public class OpcionUno extends JPanel{
     private JButton enviarButton;
     private JButton volverButton;
     private JPanel opcio1Panel;
-    private DefaultTableModel modeloTabla;
+    private final DefaultTableModel modeloTabla;
 
-    public OpcionUno(VentanaPrincipal ventanaPrincipal){
+    public OpcionUno(){
         setVisible(true);
         setSize(500,500);
         add(opcio1Panel);
         String[] columnas = {"Fecha", "Circuito", "Vueltas", "Hora", "Piloto", "Posición"};
         modeloTabla = new DefaultTableModel(columnas, 0);
         table1.setModel(modeloTabla);
-    }
-
-    public JTable getTable1() {
-        return table1;
     }
 
     public DefaultTableModel getModeloTabla() {

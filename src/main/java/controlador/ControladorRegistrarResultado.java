@@ -29,10 +29,16 @@ public class ControladorRegistrarResultado {
     // Eventos principales
     private void inicializarEventos() {
         vista.getRegistroResultados().getEnviarButton().addActionListener(e -> enviarFecha());
-        vista.getRegistroResultados().getVolverButton().addActionListener(e -> {limpiarCamposRegistroResultado();modelo.getModeloRegistrarResultado().setFecha(null);vista.mostrarPanel("menu");});
+        vista.getRegistroResultados().getVolverButton().addActionListener(e -> {
+            limpiarCamposRegistroResultado();
+            modelo.getModeloRegistrarResultado().setFecha(null);
+            vista.mostrarPanel("menu");});
 
         vista.getSeleccionarPosiciones().getRegistrarButton().addActionListener(e -> registrarPilotos());
-        vista.getSeleccionarPosiciones().getVolverButton().addActionListener(e -> { vista.getSeleccionarPosiciones().limpiarTabla(); vista.mostrarPanel("registroResultados");});
+        vista.getSeleccionarPosiciones().getVolverButton().addActionListener(e -> {
+            vista.getSeleccionarPosiciones().limpiarTabla();
+            modelo.getModeloRegistrarResultado().setFecha(null);
+            vista.mostrarPanel("registroResultados");});
     }
 
     // Enviar fecha
@@ -41,8 +47,7 @@ public class ControladorRegistrarResultado {
      */
     private void enviarFecha() {
         String fechaStr = vista.getRegistroResultados().getFechaField().getText();
-        LocalDate fecha = null;
-        modelo.getModeloRegistrarResultado().setFecha(null);
+        LocalDate fecha;
 
         try{
             fecha = LocalDate.parse(fechaStr, Modelo.formatter);
@@ -55,8 +60,6 @@ public class ControladorRegistrarResultado {
             );
             return;
         }
-
-
         Carrera carrera = modelo.buscarCarrera(fecha);
         if (carrera == null) {
             limpiarCamposRegistroResultado();
@@ -64,8 +67,14 @@ public class ControladorRegistrarResultado {
             return;
         }
 
+        if ((EstadoCarrera.FINALIZADA).equals(carrera.getEstado())){
+            limpiarCamposRegistroResultado();
+            JOptionPane.showMessageDialog(vista, "Esta carrera ya fue registrada.");
+            return;
+        }
+
         // Carga los participantes de la carrera en la tabla
-        vista.getSeleccionarPosiciones().cargarPilotos(carrera.getAutoPilotos());
+        vista.getSeleccionarPosiciones().cargarPilotos(carrera.getParticipantes());
         modelo.getModeloRegistrarResultado().setFecha(fecha);
         modelo.getModeloRegistrarResultado().setCircuito(carrera.getCircuito());
         limpiarCamposRegistroResultado();
@@ -76,13 +85,12 @@ public class ControladorRegistrarResultado {
         vista.getRegistroResultados().getFechaField().setText("");
     }
 
-    // Registrar Pilotoss
+    // Registrar Pilotos
     /**
      * Procesa los resultados cargados en la tabla, valida posiciones duplicadas
      * y genera el registro de la carrera finalizada.
      */
     private void registrarPilotos() {
-        RegistroCarrera registroCarrera = new RegistroCarrera();
         ArrayList<Object[]> filas = vista.getSeleccionarPosiciones().obtenerDatosTabla();
 
         if (filas == null || filas.isEmpty()) {
@@ -115,7 +123,7 @@ public class ControladorRegistrarResultado {
 
         // Procesar pilotos
         LocalDate fecha = modelo.getModeloRegistrarResultado().getFecha();
-        ArrayList<AutoPiloto> resultados = new ArrayList<>(Collections.nCopies(20, null));
+        ArrayList<ResultadoCarrera> resultados = new ArrayList<>(Collections.nCopies(20, null));
 
         for (Object[] fila : filas) {
             String dni = (String) fila[0];
@@ -150,19 +158,18 @@ public class ControladorRegistrarResultado {
             }
 
             // Crear relación Auto-Piloto
-            AutoPiloto autoPiloto = new AutoPiloto(fecha, piloto, auto);
             int posicionIndex = posicion.ordinal();
-            registroCarrera.agregarAutoPiloto(posicionIndex, autoPiloto);
+            resultados.add(new ResultadoCarrera(posicionIndex, new AutoPiloto(fecha, piloto, auto), puntos));
 
             // Actualizar estadísticas del piloto
-            modelo.agregarPuntaje(dni, puntos);
+            modelo.getModeloRegistrarResultado().agregarPuntaje(dni, puntos);
 
             int pos = posicion.ordinal() + 1;
             if (pos == 1) {
-                piloto.setVictorias(piloto.getVictorias() + 1);
-                piloto.setPodios(piloto.getPodios() + 1);
+                modelo.buscarPiloto(dni).setVictorias(piloto.getVictorias() + 1);
+                modelo.buscarPiloto(dni).setPodios(piloto.getPodios() + 1);
             } else if (pos == 2 || pos == 3) {
-                piloto.setPodios(piloto.getPodios() + 1);
+                modelo.buscarPiloto(dni).setPodios(piloto.getPodios() + 1);
             }
         }
 
@@ -173,19 +180,9 @@ public class ControladorRegistrarResultado {
             return;
         }
 
-        Carrera carrera = new Carrera(fecha, base.getNumeroVueltas(), base.getHoraRealizacion(), base.getTotalCarrerasCorridas(),base.getCircuito(), resultados);
-
-        registroCarrera.agregarCarrera(carrera);
-        modelo.agregarCarrerasResultado(registroCarrera);
-
-        // Eliminar carrera base del main.java.modelo (ya registrada con resultados)
-        for (Carrera carreraAux : modelo.getCarreras()) {
-            if (carreraAux.getFechaRealizacion().equals(fecha)) {
-                modelo.getCarreras().remove(carreraAux);
-                break;
-            }
-        }
-
+        modelo.buscarCarrera(fecha).agregarResultado(resultados);
+        // Actualizar estado de la carrera
+        modelo.buscarCarrera(fecha).setEstado(EstadoCarrera.FINALIZADA);
         // Limpiar datos y volver al menú
         modelo.getModeloRegistrarResultado().setFecha(null);
         modelo.getModeloRegistrarResultado().setCircuito(null);
