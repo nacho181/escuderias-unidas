@@ -7,7 +7,7 @@ import vista.VentanaPrincipal;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 
 /**
@@ -29,16 +29,10 @@ public class ControladorRegistrarResultado {
     // Eventos principales
     private void inicializarEventos() {
         vista.getRegistroResultados().getEnviarButton().addActionListener(e -> enviarFecha());
-        vista.getRegistroResultados().getVolverButton().addActionListener(e -> {
-            limpiarCamposRegistroResultado();
-            modelo.getModeloRegistrarResultado().setFecha(null);
-            vista.mostrarPanel("menu");});
+        vista.getRegistroResultados().getVolverButton().addActionListener(e -> {limpiarCamposRegistroResultado();modelo.getModeloRegistrarResultado().setFecha(null);vista.mostrarPanel("menu");});
 
         vista.getSeleccionarPosiciones().getRegistrarButton().addActionListener(e -> registrarPilotos());
-        vista.getSeleccionarPosiciones().getVolverButton().addActionListener(e -> {
-            vista.getSeleccionarPosiciones().limpiarTabla();
-            modelo.getModeloRegistrarResultado().setFecha(null);
-            vista.mostrarPanel("registroResultados");});
+        vista.getSeleccionarPosiciones().getVolverButton().addActionListener(e -> {vista.getSeleccionarPosiciones().limpiarTabla();modelo.getModeloRegistrarResultado().setFecha(null);vista.mostrarPanel("registroResultados");});
     }
 
     // Enviar fecha
@@ -99,79 +93,19 @@ public class ControladorRegistrarResultado {
         }
 
         // Validar posiciones duplicadas
-        for (int i = 0; i < filas.size(); i++) {
-            Object valor1 = filas.get(i)[3];
-            if (!(valor1 instanceof Integer)) continue;
-            int pos1 = (Integer) valor1;
-
-            for (int j = i + 1; j < filas.size(); j++) {
-                Object valor2 = filas.get(j)[3];
-                if (!(valor2 instanceof Integer)) continue;
-                int pos2 = (Integer) valor2;
-
-                if (pos1 == pos2) {
-                    JOptionPane.showMessageDialog(
-                            vista,
-                            "La posición " + pos1 + " está repetida.\nVerifique que cada piloto tenga una posición distinta.",
-                            "Error de validación",
-                            JOptionPane.WARNING_MESSAGE
-                    );
-                    return;
-                }
-            }
+        if (modelo.getModeloRegistrarResultado().verificarPosDuplicadas(filas)) {
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Existe una posición repetida.\nVerifique que cada piloto tenga una posición distinta.",
+                    "Error de validación",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
         // Procesar pilotos
         LocalDate fecha = modelo.getModeloRegistrarResultado().getFecha();
-        ArrayList<ResultadoCarrera> resultados = new ArrayList<>(Collections.nCopies(20, null));
 
-        for (Object[] fila : filas) {
-            String dni = (String) fila[0];
-            String autoModelo = (String) fila[2];
-            Object valorPosicion = fila[3];
 
-            // Determinar posición y puntos
-            Posicion posicion = null;
-            int puntos = 0;
-
-            if (valorPosicion instanceof Integer) {
-                int posNum = (Integer) valorPosicion;
-                if (posNum >= 1 && posNum <= Posicion.values().length) {
-                    posicion = Posicion.values()[posNum - 1];
-                    puntos = posicion.getPuntos();
-                }
-            } else if (valorPosicion instanceof Posicion) {
-                posicion = (Posicion) valorPosicion;
-                puntos = posicion.getPuntos();
-            }
-
-            // Si no se puede determinar posición, saltar la fila
-            if (posicion == null) continue;
-
-            // Buscar main.java.entidades
-            Piloto piloto = modelo.buscarPiloto(dni);
-            Auto auto = modelo.buscarAuto(autoModelo);
-
-            if (piloto == null) {
-                JOptionPane.showMessageDialog(vista, "No se encontró el piloto con DNI: " + dni);
-                return;
-            }
-
-            // Crear relación Auto-Piloto
-            int posicionIndex = posicion.ordinal();
-            resultados.add(new ResultadoCarrera(posicionIndex, new AutoPiloto(fecha, piloto, auto), puntos));
-
-            // Actualizar estadísticas del piloto
-            modelo.getModeloRegistrarResultado().agregarPuntaje(dni, puntos);
-
-            int pos = posicion.ordinal() + 1;
-            if (pos == 1) {
-                modelo.buscarPiloto(dni).setVictorias(piloto.getVictorias() + 1);
-                modelo.buscarPiloto(dni).setPodios(piloto.getPodios() + 1);
-            } else if (pos == 2 || pos == 3) {
-                modelo.buscarPiloto(dni).setPodios(piloto.getPodios() + 1);
-            }
-        }
 
         // Finalizar registro
         Carrera base = modelo.buscarCarrera(fecha);
@@ -180,7 +114,7 @@ public class ControladorRegistrarResultado {
             return;
         }
 
-        modelo.buscarCarrera(fecha).agregarResultado(resultados);
+        modelo.buscarCarrera(fecha).agregarResultado(modelo.getModeloRegistrarResultado().procesarPilotos(filas));
         // Actualizar estado de la carrera
         modelo.buscarCarrera(fecha).setEstado(EstadoCarrera.FINALIZADA);
         // Limpiar datos y volver al menú
@@ -192,3 +126,4 @@ public class ControladorRegistrarResultado {
         vista.mostrarPanel("menu");
     }
 }
+

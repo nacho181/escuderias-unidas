@@ -70,3 +70,5 @@
 /src/target/classes/entidades/EstadoCarrera.class
 /src/target/classes/entidades/ParticipacionCarrera.class
 /src/target/classes/entidades/ResultadoCarrera.class
+/src/target/classes/controlador/ControladorPlanificarCarrera$1.class
+/src/target/classes/entidades/ResultadoPlanificacion.class

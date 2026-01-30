@@ -17,6 +17,25 @@ public class ModeloPlanificarCarrera {
         pilotosAux = new ArrayList<>();
     }
 
+    public ResultadoPlanificacion registrarPilotoAuto(String dniPiloto, LocalDate fecha, PilotoEscuderia pilotoEscuderia, Auto autoSeleccionado) {
+
+        if (pilotoEscuderia == null) {
+            return ResultadoPlanificacion.PILOTO_SIN_CONTRATO;
+        }
+
+        if (autoSeleccionado == null) {
+            return ResultadoPlanificacion.AUTO_NO_PERTENECE;
+        }
+
+        if (verificarDuplicados(pilotoEscuderia, autoSeleccionado)) {
+            return ResultadoPlanificacion.DUPLICADO_EN_CARRERA;
+        }
+
+        // registrar realmente
+        return ResultadoPlanificacion.OK;
+    }
+
+
     /** Busca un piloto asociado a una escudería por DNI. */
     public PilotoEscuderia buscarPilotEscu(Escuderia escuderia, String dni, LocalDate fecha) {
         for (Escuderia e : modelo.getRegistroGeneral().getEscuderias()) {
@@ -40,23 +59,6 @@ public class ModeloPlanificarCarrera {
             }
         }
         return null;
-    }
-
-    /**
-     * Comprueba si un piloto ya tiene un auto asignado en una fecha determinada.
-     * @return true si el piloto tiene un auto asignado en esa fecha.
-     */
-    public boolean comprobarAutoPiloto(String dni, LocalDate fecha) {
-        for(Carrera c : modelo.getRegistroGeneral().getCarreras()) {
-            if((EstadoCarrera.PROGRAMADA).equals(c.getEstado())) {
-                for (ParticipacionCarrera a : c.getParticipantes()) {
-                    if (a.getAutoPiloto().getPiloto().getDni().equals(dni) && a.getAutoPiloto().getFechaAsignacion().equals(fecha)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     public boolean verificarDuplicados(PilotoEscuderia pilotoEscuderia, Auto autoSeleccionado) {
@@ -84,7 +86,13 @@ public class ModeloPlanificarCarrera {
         return pilotosAux;
     }
 
-    public void reiniciarPilotosAux() {
+    public void reiniciarCarrera() {
+        this.carrera.setTotalCarrerasCorridas(0);
+        this.carrera.setHoraRealizacion(null);
+        this.carrera.setNumeroVueltas(0);
+        this.carrera.setCircuito(null);
+        this.carrera.setFechaRealizacion(null);
+        escuderiaSelecc = null;
         this.pilotosAux = new ArrayList<>();
         carrera.setParticipantes(new ArrayList<>());
     }

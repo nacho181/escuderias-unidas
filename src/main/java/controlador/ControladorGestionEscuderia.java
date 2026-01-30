@@ -1,7 +1,7 @@
 package controlador;
 
 
-import entidades.Mecanico;
+
 import entidades.PilotoEscuderia;
 import modelo.Modelo;
 import vista.VentanaPrincipal;
@@ -132,31 +132,12 @@ public class ControladorGestionEscuderia {
             return;
         }
 
-        // Verificar si ya está agregado a esta escudería
-        for (PilotoEscuderia p : modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().getPilotos()) {
-            if (p.getPiloto().getDni().equals(dniPiloto)) {
-                JOptionPane.showMessageDialog(null, "El piloto ya pertenece a esta escudería.");
-                return;
-            }
-        }
 
         // Verificar si está ocupado en otro contrato solapado
-        for (PilotoEscuderia p : modelo.getRegistroGeneral().getPilotoEscuderias()) {
-            if (p.getPiloto().getDni().equals(dniPiloto)) {
-                LocalDate existenteInicio = p.getDesdeFecha();
-                LocalDate existenteFin = p.getHastaFecha();
-
-                boolean solapan =
-                        (fechaInicio.isBefore(existenteInicio) && fechaFinal.isAfter(existenteFin))
-                                || (fechaInicio.isBefore(existenteInicio) && fechaFinal.isAfter(existenteInicio) && fechaFinal.isBefore(existenteFin))
-                                || (fechaInicio.isAfter(existenteInicio) && fechaFinal.isBefore(existenteFin))
-                                || (fechaInicio.isAfter(existenteInicio) && fechaInicio.isBefore(existenteFin) && fechaFinal.isAfter(existenteFin));
-
-                if (solapan) {
-                    JOptionPane.showMessageDialog(null, "El piloto ya tiene un contrato activo en ese rango de fechas.");
-                    return;
-                }
-            }
+        boolean solapado = modelo.getModeloGestionEscuderias().pilotoSolapado(dniPiloto, fechaInicio, fechaFinal);
+        if (solapado) {
+                JOptionPane.showMessageDialog(null, "El piloto ya tiene un contrato activo en ese rango de fechas.");
+                return;
         }
 
         // Registrar piloto
@@ -193,11 +174,9 @@ public class ControladorGestionEscuderia {
         }
 
         // Verificar duplicado
-        for(Mecanico m : modelo.getModeloGestionEscuderias().getEscuderiaSeleccionada().getMecanicos()) {
-            if (m.getDni().equals(dni)) {
-                JOptionPane.showMessageDialog(null, "El mecánico ya pertenece a esta escudería.");
-                return;
-            }
+        if (modelo.getModeloGestionEscuderias().duplicadoMecanico(dni)) {
+            JOptionPane.showMessageDialog(null, "El mecánico ya pertenece a esta escudería.");
+            return;
         }
 
         // Registrar

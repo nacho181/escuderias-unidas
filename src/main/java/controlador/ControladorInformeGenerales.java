@@ -170,37 +170,20 @@ public class ControladorInformeGenerales {
      */
     private void opcion3() {
         String dni = vista.getOpcionTres().getDniField().getText();
-        ArrayList<Carrera> carreras = new ArrayList<>();
 
-        for (Carrera carrera : modelo.getRegistroGeneral().getCarreras()) {
-            if(carrera.getEstado().equals(EstadoCarrera.FINALIZADA)){
-                List<ResultadoCarrera> posiciones = carrera.getResultados();
-                for (ResultadoCarrera posicion : posiciones) {
-                    if (posicion == null || posicion.getAutoPiloto() == null) {
-                        continue; // pasa a la siguiente posición
-                    }
-                    if (posicion.getPosicion() == 0 || posicion.getPosicion() == 1 || posicion.getPosicion() == 2) {
-                        AutoPiloto ap = posicion.getAutoPiloto();
-                        Piloto pilotoBuscado = modelo.buscarPiloto(dni);
-                        if (ap.getPiloto().equals(pilotoBuscado)) {
-                            carreras.add(carrera);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+
+
 
 
         var tabla = vista.getOpcionTres().getModeloTabla();
         tabla.setRowCount(0);
 
-        if (carreras.isEmpty()) {
+        if (modelo.getModeloInformeGenerales().obtenerPodio(dni).isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Este piloto no tiene podios registrados.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        for (Carrera reg : carreras) {
+        for (Carrera reg : modelo.getModeloInformeGenerales().obtenerPodio(dni)) {
             tabla.addRow(new Object[]{
                     (reg.consultarPodioPiloto(dni) + 1),
                     reg.consultarPiloto(dni).getNombre(),
@@ -231,13 +214,7 @@ public class ControladorInformeGenerales {
         }
 
         // Buscar escudería
-        Escuderia escuderia = null;
-        for (Escuderia e : modelo.getRegistroGeneral().getEscuderias()) {
-            if (e.getNombre().equalsIgnoreCase(nombreEscuderia)) {
-                escuderia = e;
-                break;
-            }
-        }
+        Escuderia escuderia = modelo.getModeloRegistro().comprobarEscuderia(nombreEscuderia);
 
         if (escuderia == null) {
             JOptionPane.showMessageDialog(vista, "No se encontró la escudería ingresada.", "Error", JOptionPane.WARNING_MESSAGE);
@@ -251,19 +228,7 @@ public class ControladorInformeGenerales {
         }
 
         // Buscar carreras donde participaron esos autos
-        ArrayList<Carrera> carrerasEncontradas = new ArrayList<>();
-
-        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
-            for (ResultadoCarrera ap : reg.getResultados()) {
-                // Si pasa la validación, sigue la lógica normal
-                if (ap == null || ap.getAutoPiloto().getAuto() == null) {
-                    continue;
-                }
-                if (autosEscuderia.contains(ap.getAutoPiloto().getAuto()) && !carrerasEncontradas.contains(reg)) {
-                    carrerasEncontradas.add(reg);
-                }
-            }
-        }
+        ArrayList<Carrera> carrerasEncontradas = modelo.getModeloInformeGenerales().obtenerCarreraAuto(autosEscuderia);
 
 
         // Cargar tabla
@@ -313,10 +278,8 @@ public class ControladorInformeGenerales {
             String nombreEscuderia = vista.getOpcionCinco().getNombreField().getText().trim();
             ArrayList<Mecanico> mecanicos = new ArrayList<>();
 
-            for (Escuderia e : modelo.getRegistroGeneral().getEscuderias()) {
-                if (e.getNombre().equalsIgnoreCase(nombreEscuderia)) {
-                    mecanicos.addAll(e.getMecanicos());
-                }
+            if (modelo.getModeloRegistro().comprobarEscuderia(nombreEscuderia) != null) {
+                mecanicos.addAll(modelo.getModeloRegistro().comprobarEscuderia(nombreEscuderia).getMecanicos());
             }
 
             if (mecanicos.isEmpty()) {
@@ -352,30 +315,14 @@ public class ControladorInformeGenerales {
         String dni = vista.getOpcionSeis().getDniField().getText().trim();
         String circuito = vista.getOpcionSeis().getNombreCircField().getText().trim();
 
-        int contador = 0;
-
-        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
-            if (reg.getCircuito().getNombre().equalsIgnoreCase(circuito) && reg.getEstado().equals(EstadoCarrera.FINALIZADA)) {
-                for (ResultadoCarrera ap : reg.getResultados()) {
-                    // Validaciones para evitar NullPointerException
-                    if (ap == null || ap.getAutoPiloto().getPiloto() == null) {
-                        continue; // pasa a la siguiente posición
-                    }
-
-                    if (ap.getAutoPiloto().getPiloto().getDni().equalsIgnoreCase(dni)) {
-                        contador++;
-                    }
-                }
-            }
-        }
 
 
-        if (contador == 0) {
+
+        if (modelo.getModeloInformeGenerales().contadorPilCirc(dni,circuito) == 0) {
             JOptionPane.showMessageDialog(vista, "Este piloto no ha corrido en ese circuito.");
         } else {
-            JOptionPane.showMessageDialog(vista, "El piloto ha corrido un total de " + contador + " veces en ese circuito.");
+            JOptionPane.showMessageDialog(vista, "El piloto ha corrido un total de " + modelo.getModeloInformeGenerales().contadorPilCirc(dni,circuito) + " veces en ese circuito.");
         }
-
         limpiarCamposOpcion6();
     }
 
@@ -390,18 +337,13 @@ public class ControladorInformeGenerales {
      */
     private void opcion7() {
         String circuito = vista.getOpcionSiete().getNombreCircPanel().getText().trim();
-        int contador = 0;
 
-        for (Carrera reg : modelo.getRegistroGeneral().getCarreras()) {
-            if (reg.getCircuito().getNombre().equalsIgnoreCase(circuito) && reg.getEstado().equals(EstadoCarrera.FINALIZADA)) {
-                contador++;
-            }
-        }
 
-        if (contador == 0) {
+
+        if (modelo.getModeloInformeGenerales().contadorCarrCirc(circuito) == 0) {
             JOptionPane.showMessageDialog(vista, "No se ha disputado ninguna carrera en ese circuito.");
         } else {
-            JOptionPane.showMessageDialog(vista, "Se han disputado un total de " + contador + " carreras en ese circuito.");
+            JOptionPane.showMessageDialog(vista, "Se han disputado un total de " + modelo.getModeloInformeGenerales().contadorCarrCirc(circuito) + " carreras en ese circuito.");
         }
 
         limpiarCamposOpcion7();

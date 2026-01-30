@@ -47,6 +47,17 @@ public class Carrera {
         this.resultados = new ArrayList<>();
     }
 
+    public Carrera(Carrera carrera) {
+        this.fechaRealizacion = carrera.getFechaRealizacion();
+        this.horaRealizacion = carrera.getHoraRealizacion();
+        this.circuito = carrera.getCircuito();
+        this.totalCarrerasCorridas = carrera.getTotalCarrerasCorridas();
+        this.numeroVueltas = carrera.getNumeroVueltas();
+        this.estado = carrera.getEstado();
+        this.participantes = new ArrayList<>();
+        this.resultados = new ArrayList<>();
+    }
+
     public void agregarResultado(ArrayList<ResultadoCarrera> resultados) {
         this.resultados = resultados;
     }

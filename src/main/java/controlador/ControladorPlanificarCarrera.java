@@ -215,66 +215,41 @@ public class ControladorPlanificarCarrera {
         // Buscar auto dentro de la escudería seleccionada
         Auto autoSeleccionado = modelo.getModeloPlanificarCarrera().verificarAuto(modeloAuto);
 
-        if (pilotoEscuderia == null) {
-            JOptionPane.showMessageDialog(null, "El piloto no presenta contrato para esa fecha.");
+        ResultadoPlanificacion res = modelo.getModeloPlanificarCarrera().registrarPilotoAuto(
+                dniPiloto, fecha, pilotoEscuderia, autoSeleccionado
+        );
+
+        if (res != ResultadoPlanificacion.OK) {
+            JOptionPane.showMessageDialog(null, mensaje(res));
             limpiarRegistrarAutoPilotos();
             return;
         }
-
-        if (autoSeleccionado == null){
-            JOptionPane.showMessageDialog(null, "El auto no pertenece a esta escudería.");
-            limpiarRegistrarAutoPilotos();
-            return;
-        }
-
-        if (modelo.getModeloPlanificarCarrera().comprobarAutoPiloto(dniPiloto, fecha)) {
-            JOptionPane.showMessageDialog(null, "El piloto ya está asignado a otra carrera en esa fecha.");
-            limpiarRegistrarAutoPilotos();
-            return;
-        }
-
-            // Verificar duplicado en la misma carrera
-        if (modelo.getModeloPlanificarCarrera().verificarDuplicados(pilotoEscuderia, autoSeleccionado)) {
-            JOptionPane.showMessageDialog(null, "El piloto o auto ya fue registrado en esta carrera.");
-            limpiarRegistrarAutoPilotos();
-            return;
-        }
-
 
         // Registrar AutoPiloto válido
 
-        modelo.getModeloPlanificarCarrera().agregarPilotosAux
-                (new ParticipacionCarrera
-                        (new Carrera(modelo.getModeloPlanificarCarrera().getCarrera().getFechaRealizacion(),
-                                modelo.getModeloPlanificarCarrera().getCarrera().getHoraRealizacion(),
-                                modelo.getModeloPlanificarCarrera().getCarrera().getCircuito(),
-                                modelo.getModeloPlanificarCarrera().getCarrera().getTotalCarrerasCorridas(),
-                                modelo.getModeloPlanificarCarrera().getCarrera().getNumeroVueltas()),
+        modelo.getModeloPlanificarCarrera().agregarPilotosAux(
+                        new ParticipacionCarrera
+                        (new Carrera(modelo.getModeloPlanificarCarrera().getCarrera()),
                         new AutoPiloto(fecha, pilotoEscuderia.getPiloto(), autoSeleccionado)));
-        // Si es el primer registro, se crea la carrera completa
 
-        if (modelo.getModeloPlanificarCarrera().getPilotosAux().size() == 1) {
-            modelo.getModeloPlanificarCarrera().getCarrera().agregarParticipantes(modelo.getModeloPlanificarCarrera().getPilotosAux());
-            Carrera carreraDefinitiva = new Carrera(modelo.getModeloPlanificarCarrera().getCarrera().getFechaRealizacion(),
-                    modelo.getModeloPlanificarCarrera().getCarrera().getHoraRealizacion(),
-                    modelo.getModeloPlanificarCarrera().getCarrera().getCircuito(),
-                    modelo.getModeloPlanificarCarrera().getCarrera().getTotalCarrerasCorridas(),
-                    modelo.getModeloPlanificarCarrera().getCarrera().getNumeroVueltas());
-                    carreraDefinitiva.agregarParticipantes(modelo.getModeloPlanificarCarrera().getPilotosAux());
+
+        if (modelo.getModeloPlanificarCarrera().getPilotosAux().size() == 2) {
+
+            modelo.getModeloPlanificarCarrera().getCarrera().agregarParticipantes(
+                    modelo.getModeloPlanificarCarrera().getPilotosAux());
+
+            Carrera carreraDefinitiva = new Carrera(modelo.getModeloPlanificarCarrera().getCarrera());
+            carreraDefinitiva.agregarParticipantes(modelo.getModeloPlanificarCarrera().getPilotosAux());
+
             modelo.agregarCarrera(carreraDefinitiva);
-            modelo.getModeloPlanificarCarrera().reiniciarPilotosAux();
-            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(0);
-            modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(null);
-            modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(0);
-            modelo.getModeloPlanificarCarrera().getCarrera().setCircuito(null);
-            modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(null);
-            modelo.getModeloPlanificarCarrera().setEscuderiaSelecc(null);
+            modelo.getModeloPlanificarCarrera().reiniciarCarrera();
             JOptionPane.showMessageDialog(null, "Carrera registrada exitosamente. Retornando al menú principal.");
             vista.mostrarPanel("menu");
-        } else {
+
+        }
+            else {
             JOptionPane.showMessageDialog(null, "Piloto y auto agregados correctamente. Continúe con el siguiente registro.");
         }
-
         limpiarRegistrarAutoPilotos();
     }
 
@@ -284,6 +259,18 @@ public class ControladorPlanificarCarrera {
     private void limpiarRegistrarAutoPilotos() {
         vista.getRegistrarAutoPilotos().getDniField().setText("");
         vista.getRegistrarAutoPilotos().getModeloField().setText("");
+    }
+
+    private String mensaje(ResultadoPlanificacion res) {
+        return switch (res) {
+            case PILOTO_SIN_CONTRATO ->
+                    "El piloto no presenta contrato para esa fecha.";
+            case AUTO_NO_PERTENECE ->
+                    "El auto no pertenece a esta escudería.";
+            case DUPLICADO_EN_CARRERA ->
+                    "El piloto o auto ya fue registrado en esta carrera.";
+            default -> "";
+        };
     }
 }
 

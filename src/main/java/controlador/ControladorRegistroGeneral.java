@@ -75,11 +75,9 @@ public class ControladorRegistroGeneral {
         try {
             int numero = Integer.parseInt(id);
             // Verificar duplicado
-            for (Pais p : modelo.getRegistroGeneral().getPaises()) {
-                if (p.getIdPais() == numero || p.getDescripcion().equalsIgnoreCase(descripcion)) {
-                    JOptionPane.showMessageDialog(vista, "El país ya está registrado.");
-                    return;
-                }
+            if (modelo.getModeloRegistro().comprobarPaisId(numero)) {
+                JOptionPane.showMessageDialog(vista, "El país ya está registrado.");
+                return;
             }
 
             modelo.getModeloRegistro().agregarPaisRGral(new Pais(numero, descripcion));
@@ -109,11 +107,9 @@ public class ControladorRegistroGeneral {
         }
 
         // Verificar duplicado
-        for (Auto a : modelo.getRegistroGeneral().getAutos()) {
-            if (a.getModelo().equalsIgnoreCase(modeloAuto)) {
-                JOptionPane.showMessageDialog(vista, "El auto ya está registrado.");
-                return;
-            }
+        if (modelo.getModeloRegistro().comprobarAutoId(modeloAuto)) {
+            JOptionPane.showMessageDialog(vista, "El auto ya está registrado.");
+            return;
         }
 
         modelo.getModeloRegistro().agregarAutoRGral(new Auto(modeloAuto, motor));
@@ -153,11 +149,9 @@ public class ControladorRegistroGeneral {
             }
 
             //  Verificar duplicado
-            for (Escuderia e : modelo.getRegistroGeneral().getEscuderias()) {
-                if (e.getNombre().equalsIgnoreCase(nombreEscuderia)) {
-                    JOptionPane.showMessageDialog(vista, "La escudería ya está registrada.");
-                    return;
-                }
+            if(modelo.getModeloRegistro().comprobarEscuderia(nombreEscuderia) != null){
+                JOptionPane.showMessageDialog(vista, "La escudería ya está registrada.");
+                return;
             }
 
             modelo.getModeloRegistro().agregarEscuderiaRGral(new Escuderia(nombreEscuderia, pais));
@@ -202,11 +196,9 @@ public class ControladorRegistroGeneral {
             }
 
             //  Verificar duplicado
-            for (Circuito c : modelo.getRegistroGeneral().getCircuitos()) {
-                if (c.getNombre().equalsIgnoreCase(nombreCircuito)) {
-                    JOptionPane.showMessageDialog(vista, "El circuito ya está registrado.");
-                    return;
-                }
+            if (modelo.getModeloRegistro().comprobarCircuito(nombreCircuito)) {
+                JOptionPane.showMessageDialog(vista, "El circuito ya está registrado.");
+                return;
             }
 
             modelo.getModeloRegistro().agregarCircuitoRGral(new Circuito(nombreCircuito, numeroLongitud, pais));
@@ -267,11 +259,9 @@ public class ControladorRegistroGeneral {
             }
 
             // Verificar duplicado
-            for (Persona persona : modelo.getRegistroGeneral().getPersonas()) {
-                if (persona.getDni().equals(dni)) {
-                    JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
-                    return;
-                }
+            if (modelo.getModeloRegistro().comprobarPersonaDni(dni)){
+                JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
+                return;
             }
 
             modelo.getModeloRegistro().agregarPersonaGral(new Piloto(
@@ -329,11 +319,9 @@ public class ControladorRegistroGeneral {
             }
 
             // Verificar duplicado
-            for (Persona persona : modelo.getRegistroGeneral().getPersonas()) {
-                if (persona.getDni().equals(dni)) {
-                    JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
-                    return;
-                }
+            if (modelo.getModeloRegistro().comprobarPersonaDni(dni)){
+                JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
+                return;
             }
 
             modelo.getModeloRegistro().agregarPersonaGral(new Mecanico(

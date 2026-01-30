@@ -50,8 +50,8 @@ public class SeleccionarPosiciones extends JPanel {
         modeloTabla = new DefaultTableModel(
                 new Object[]{"DNI", "Apellido", "Auto", "Posición", "Puntos"}, 0) {
             @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 3; // Solo la columna "Posición" es editable
+            public boolean isCellEditable(int fila, int columna) {
+                return columna == 3; // Solo la columna "Posición" es editable
             }
         };
 
