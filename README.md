@@ -133,8 +133,8 @@ El siguiente paso del proyecto es:
 ## Diagramas
 
 ### Diagrama Entidad-Relación (DER)
-![DER](docs/der.png)
+![DER](docs/DER.png)
 
 ### Diagrama Funcional
-![Diagrama Funcional](docs/funcional.png)
+![Diagrama Funcional](docs/DiagramaFuncional.png)
 
