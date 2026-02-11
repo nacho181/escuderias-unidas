@@ -1,29 +1,21 @@
 package controlador;
 
 import modelo.Modelo;
+import modelo.ModeloPlanificarCarrera;
 import vista.VentanaPrincipal;
 
 public class ControladorPrincipal {
 
-    private Modelo modelo;
     private final VentanaPrincipal vista;
-    private ControladorRegistroGeneral controladorRegistroGeneral;
-    private ControladorGestionEscuderia controladorGestionEscuderia;
-    private ControladorPlanificarCarrera controladorPlanificarCarrera;
-    private ControladorRegistrarResultado controladorRegistrarResultado;
-    private ControladorInformeGenerales controladorInformeGenerales;
 
     public ControladorPrincipal(Modelo modelo,VentanaPrincipal vista) {
         this.vista = vista;
-        this.modelo = modelo;
         inicializarEventos();
-        controladorRegistroGeneral = new ControladorRegistroGeneral(modelo, vista);
-        controladorGestionEscuderia = new ControladorGestionEscuderia(modelo, vista);
-        controladorPlanificarCarrera = new ControladorPlanificarCarrera(modelo, vista);
-        controladorRegistrarResultado = new ControladorRegistrarResultado(modelo, vista);
-        controladorInformeGenerales = new ControladorInformeGenerales(modelo, vista);
-
-
+        new ControladorRegistroGeneral(modelo, vista);
+        new ControladorGestionEscuderia(modelo, vista);
+        new ControladorPlanificarCarrera(modelo, vista);
+        new ControladorRegistrarResultado(modelo, vista);
+        new ControladorInformeGenerales(modelo, vista);
     }
 
     private void inicializarEventos() {

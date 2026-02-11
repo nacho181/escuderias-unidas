@@ -19,15 +19,6 @@ public class ModeloRegistroGral {
         return null;
     }
 
-    public boolean comprobarPaisId(Integer nombre) {
-        for (Pais p : modelo.getRegistroGeneral().getPaises()) {
-            if (nombre.equals(p.getIdPais())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean comprobarAutoId(String modeloAuto) {
         for (Auto a : modelo.getRegistroGeneral().getAutos()) {
             if (modeloAuto.equals(a.getModelo())) {

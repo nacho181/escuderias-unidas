@@ -9,7 +9,6 @@ public class Carrera {
     private LocalDate fechaRealizacion;
     private  LocalTime horaRealizacion;
     private  Circuito circuito;
-    private int totalCarrerasCorridas;
     private  int numeroVueltas;
     private EstadoCarrera estado;
 
@@ -20,7 +19,6 @@ public class Carrera {
         fechaRealizacion = null;
         numeroVueltas = 0;
         horaRealizacion = null;
-        totalCarrerasCorridas = 0;
         circuito = null;
         participantes = new ArrayList<>();
         resultados = new ArrayList<>();
@@ -31,7 +29,6 @@ public class Carrera {
         this.fechaRealizacion = fechaRealizacion;
         this.horaRealizacion = horaRealizacion;
         this.circuito = circuito;
-        this.totalCarrerasCorridas = totalCarrerasCorridas;
         this.numeroVueltas = numeroVueltas;
         estado = EstadoCarrera.PROGRAMADA;
     }
@@ -40,7 +37,6 @@ public class Carrera {
         this.fechaRealizacion = fechaRealizacion;
         this.numeroVueltas = numeroVueltas;
         this.horaRealizacion = horaRealizacion;
-        this.totalCarrerasCorridas = totalCarrerasCorridas;
         this.circuito = circuito;
         estado = EstadoCarrera.PROGRAMADA;
         this.participantes = autoPilotos;
@@ -51,7 +47,7 @@ public class Carrera {
         this.fechaRealizacion = carrera.getFechaRealizacion();
         this.horaRealizacion = carrera.getHoraRealizacion();
         this.circuito = carrera.getCircuito();
-        this.totalCarrerasCorridas = carrera.getTotalCarrerasCorridas();
+
         this.numeroVueltas = carrera.getNumeroVueltas();
         this.estado = carrera.getEstado();
         this.participantes = new ArrayList<>();
@@ -73,12 +69,7 @@ public class Carrera {
         return circuito;
     }
 
-    public void setTotalCarrerasCorridas(int totalCarrerasCorridas) {
-        this.totalCarrerasCorridas = totalCarrerasCorridas;
-    }
-    public int getTotalCarrerasCorridas() {
-        return totalCarrerasCorridas;
-    }
+
     public void setFechaRealizacion(LocalDate fechaRealizacion) {
         this.fechaRealizacion = fechaRealizacion;
     }
@@ -155,7 +146,6 @@ public class Carrera {
                 "fechaRealizacion=" + fechaRealizacion +
                 ", horaRealizacion=" + horaRealizacion +
                 ", circuito=" + circuito +
-                ", totalCarrerasCorridas=" + totalCarrerasCorridas +
                 ", numeroVueltas=" + numeroVueltas +
                 ", estado=" + estado +
                 ", participantes=" + participantes +

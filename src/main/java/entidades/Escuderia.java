@@ -7,7 +7,7 @@ public class Escuderia {
     private final ArrayList<Auto> autos;
     private final ArrayList<PilotoEscuderia> pilotos;
     private final ArrayList<Mecanico> mecanicos;
-    private Pais pais;
+    private final Pais pais;
 
 
     public Escuderia(String nombre, Pais pais) {

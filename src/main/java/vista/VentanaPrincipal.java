@@ -81,7 +81,7 @@ public class VentanaPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
         setLocationRelativeTo(null); // Centra la ventana
-        ImageIcon icono = new ImageIcon(Objects.requireNonNull(getClass().getResource("formula1.png")));
+        ImageIcon icono = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/icono.png")));
         setIconImage(icono.getImage());
 
         // Inicialización del layout principal que permite alternar vistas

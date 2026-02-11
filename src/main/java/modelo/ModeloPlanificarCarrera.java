@@ -87,7 +87,6 @@ public class ModeloPlanificarCarrera {
     }
 
     public void reiniciarCarrera() {
-        this.carrera.setTotalCarrerasCorridas(0);
         this.carrera.setHoraRealizacion(null);
         this.carrera.setNumeroVueltas(0);
         this.carrera.setCircuito(null);

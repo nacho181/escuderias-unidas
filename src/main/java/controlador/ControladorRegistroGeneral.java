@@ -75,7 +75,7 @@ public class ControladorRegistroGeneral {
         try {
             int numero = Integer.parseInt(id);
             // Verificar duplicado
-            if (modelo.getModeloRegistro().comprobarPaisId(numero)) {
+            if (modelo.getModeloRegistro().comprobarPais(numero) != null) {
                 JOptionPane.showMessageDialog(vista, "El país ya está registrado.");
                 return;
             }

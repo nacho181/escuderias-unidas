@@ -73,7 +73,7 @@ public class ModeloRegistrarResultado {
 
            // Crear relación Auto-Piloto
            int posicionIndex = posicion.ordinal();
-           resultados.add(new ResultadoCarrera(posicionIndex, new AutoPiloto(fecha, piloto, auto), puntos));
+           resultados.add(posicionIndex, new ResultadoCarrera(posicionIndex, new AutoPiloto(fecha, piloto, auto), puntos));
 
            // Actualizar estadísticas del piloto
            modelo.getModeloRegistrarResultado().agregarPuntaje(dni, puntos);

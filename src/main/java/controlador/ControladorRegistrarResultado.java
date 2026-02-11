@@ -121,7 +121,7 @@ public class ControladorRegistrarResultado {
         modelo.getModeloRegistrarResultado().setFecha(null);
         modelo.getModeloRegistrarResultado().setCircuito(null);
         vista.getSeleccionarPosiciones().limpiarTabla();
-
+        System.out.println(modelo.getRegistroGeneral().getCarreras());
         JOptionPane.showMessageDialog(vista, "Carrera registrada correctamente.");
         vista.mostrarPanel("menu");
     }

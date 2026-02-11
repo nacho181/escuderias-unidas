@@ -115,12 +115,10 @@ public class ControladorPlanificarCarrera {
 
         try {
             int numeroVueltas = Integer.parseInt(numVueltas);
-            int totalCarreras = Integer.parseInt(totCarreras);
 
             modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(fecha);
             modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(horaCarrera);
             modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(numeroVueltas);
-            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(totalCarreras);
             limpiarCampoCircSelecc();
             vista.mostrarPanel("seleccionarEscuderia");
         } catch (NumberFormatException e) {
@@ -175,7 +173,6 @@ public class ControladorPlanificarCarrera {
         );
 
         if (opcion == JOptionPane.YES_OPTION) {
-            modelo.getModeloPlanificarCarrera().getCarrera().setTotalCarrerasCorridas(0);
             modelo.getModeloPlanificarCarrera().getCarrera().setHoraRealizacion(null);
             modelo.getModeloPlanificarCarrera().getCarrera().setNumeroVueltas(0);
             modelo.getModeloPlanificarCarrera().getCarrera().setFechaRealizacion(null);
