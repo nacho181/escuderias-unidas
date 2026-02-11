@@ -132,10 +132,9 @@ El siguiente paso del proyecto es:
 
 ## Diagramas
 
-Las imágenes del Diagrama Entidad-Relación (DER) y del Diagrama Funcional se encuentran en la carpeta `/docs`.
-
-Ejemplo de inclusión en el README:
-
-```markdown
+### Diagrama Entidad-Relación (DER)
 ![DER](docs/der.png)
+
+### Diagrama Funcional
 ![Diagrama Funcional](docs/funcional.png)
+
