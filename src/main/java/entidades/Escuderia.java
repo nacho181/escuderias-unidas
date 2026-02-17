@@ -3,6 +3,7 @@ package entidades;
 import java.util.ArrayList;
 
 public class Escuderia {
+    private int id;
     private final String nombre;
     private final ArrayList<Auto> autos;
     private final ArrayList<PilotoEscuderia> pilotos;
@@ -16,6 +17,14 @@ public class Escuderia {
         autos = new ArrayList<>();
         pilotos = new ArrayList<>();
         mecanicos = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -47,4 +56,7 @@ public class Escuderia {
     }
 
 
+    public Pais getPais() {
+        return pais;
+    }
 }

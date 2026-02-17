@@ -1,8 +1,8 @@
 package app;
 
-import controlador.ControladorPrincipal;
-import modelo.Modelo;
-import vista.VentanaPrincipal;
+import mvc.controlador.ControladorPrincipal;
+import mvc.modelo.Modelo;
+import mvc.vista.VentanaPrincipal;
 
 import javax.swing.*;
 
@@ -11,13 +11,13 @@ import javax.swing.*;
  * <p>
  * Esta clase actúa como punto de entrada de la aplicación.
  * Su función principal es inicializar los componentes fundamentales del programa:
- * el main.java.modelo, la main.java.vista principal y el main.java.controlador.
+ * el main.java.mvc.modelo, la main.java.mvc.vista principal y el main.java.mvc.controlador.
  * </p>
  *
  * <p>
  * A través de esta clase se establece la comunicación inicial entre las capas
  * Modelo-Vista-Controlador (MVC), garantizando que la interfaz gráfica se
- * cargue correctamente y que el main.java.controlador pueda manejar los eventos del usuario.
+ * cargue correctamente y que el main.java.mvc.controlador pueda manejar los eventos del usuario.
  * </p>
  */
 
@@ -26,7 +26,7 @@ import javax.swing.*;
     /**
      * Metodo principal que inicia el programa.
      * <p>
-     * Crea las instancias del main.java.modelo, la main.java.vista y el main.java.controlador,
+     * Crea las instancias del main.java.mvc.modelo, la main.java.mvc.vista y el main.java.mvc.controlador,
      * y muestra la ventana principal al usuario.
      * </p>
      *
@@ -37,9 +37,9 @@ import javax.swing.*;
         SwingUtilities.invokeLater(() -> {
             // Se crea la ventana principal (Vista)
             VentanaPrincipal ventana = new VentanaPrincipal();
-            // Se instancia el main.java.modelo que contiene la lógica y datos del sistema
+            // Se instancia el main.java.mvc.modelo que contiene la lógica y datos del sistema
             Modelo modelo = new Modelo();
-            // Se crea el main.java.controlador principal que conecta la main.java.vista con el main.java.modelo
+            // Se crea el main.java.mvc.controlador principal que conecta la main.java.mvc.vista con el main.java.mvc.modelo
             new ControladorPrincipal(modelo, ventana);
             // Finalmente, se hace visible la ventana para el usuario
             ventana.setVisible(true);

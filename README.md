@@ -18,7 +18,7 @@ El proyecto comenzó como un trabajo académico y fue posteriormente refactoriza
 - Java
 - Swing (JFrame, JPanel, JTable, CardLayout)
 - Programación Orientada a Objetos
-- MySQL (modelo de base de datos diseñado)
+- MySQL (mvc.modelo de base de datos diseñado)
 - Arquitectura MVC
 
 ---
@@ -36,7 +36,7 @@ Contiene:
 - Validaciones de consistencia
 - Estructura centralizada mediante `RegistroGeneral`
 
-El modelo concentra la lógica interna del sistema y garantiza la coherencia del dominio.
+El mvc.modelo concentra la lógica interna del sistema y garantiza la coherencia del dominio.
 
 ---
 
@@ -51,10 +51,10 @@ El modelo concentra la lógica interna del sistema y garantiza la coherencia del
 
 ###  Controlador
 
-- Intermedia entre la vista y el modelo.
+- Intermedia entre la mvc.vista y el mvc.modelo.
 - Captura eventos de la interfaz gráfica.
 - Valida entradas de usuario.
-- Ejecuta operaciones sobre el modelo.
+- Ejecuta operaciones sobre el mvc.modelo.
 
 ---
 
@@ -63,7 +63,7 @@ El modelo concentra la lógica interna del sistema y garantiza la coherencia del
 Actualmente:
 
 - ✔ La aplicación funciona completamente en modo escritorio.
-- ✔ El modelo de dominio está implementado.
+- ✔ El mvc.modelo de dominio está implementado.
 - ✔ Las reglas de negocio están definidas y aplicadas.
 - ✔ El diseño de la base de datos (DER) está realizado.
 - ⏳ La integración con base de datos mediante JDBC está en desarrollo.

@@ -1,6 +1,7 @@
 package entidades;
 
 public class Circuito {
+    private int id;
     private String nombre;
     private int longitud;
     private Pais pais;
@@ -15,6 +16,18 @@ public class Circuito {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

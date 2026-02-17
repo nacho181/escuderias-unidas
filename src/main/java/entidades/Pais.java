@@ -12,6 +12,10 @@ public class Pais {
         this.descripcion = descripcion;
     }
 
+    public Pais(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public int getIdPais() {
         return idPais;
     }
@@ -20,7 +24,7 @@ public class Pais {
         this.idPais = idPais;
     }
 
-    public String getDescripcion() {
+    public String getNombre() {
         return descripcion;
     }
 
@@ -33,4 +37,15 @@ public class Pais {
         return "País : " + descripcion + "\n";
     }
 
+    public void setId(int id) {
+        this.idPais = id;
+    }
+
+    public int getId() {
+        return idPais;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }

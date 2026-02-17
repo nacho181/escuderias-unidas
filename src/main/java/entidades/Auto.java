@@ -1,6 +1,7 @@
 package entidades;
 
 public class Auto {
+    private int id;
     private boolean asignado;
     private String modelo;
     private String motor;
@@ -8,10 +9,17 @@ public class Auto {
     public Auto() {
     }
 
+    public Auto(String modelo, String motor) {
+        this.modelo = modelo;
+        this.motor = motor;
+        asignado = false;
+    }
+
     public String getModelo() {
         return modelo;
     }
-    public Auto(String modelo, String motor) {
+    public Auto(int id, String modelo, String motor) {
+        this.id = id;
         this.modelo = modelo;
         this.motor = motor;
         asignado = false;
@@ -35,4 +43,11 @@ public class Auto {
                 "Motor  : " + motor + "\n";
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
