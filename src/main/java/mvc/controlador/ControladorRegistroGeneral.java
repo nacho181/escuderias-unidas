@@ -122,7 +122,7 @@ public class ControladorRegistroGeneral {
             JOptionPane.showMessageDialog(vista,
                     "Registro guardado con éxito. ID generado: " + auto.getId());
 
-            limpiarCamposPaises();
+            limpiarCamposAuto();
 
         } catch (IllegalArgumentException e) {
 
@@ -163,7 +163,7 @@ public class ControladorRegistroGeneral {
             JOptionPane.showMessageDialog(vista,
                     "Registro guardado con éxito. ID generado: " + escuderia.getId());
 
-            limpiarCamposPaises();
+            limpiarCamposEscuderia();
 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(vista, e.getMessage());
@@ -207,17 +207,17 @@ public class ControladorRegistroGeneral {
             }
 
             //  Verificar duplicado
-            if (modelo.getModeloRegistro().comprobarCircuito(nombreCircuito)) {
-                JOptionPane.showMessageDialog(vista, "El circuito ya está registrado.");
-                return;
-            }
-
-            modelo.getModeloRegistro().agregarCircuitoRGral(new Circuito(nombreCircuito, numeroLongitud, pais));
-            JOptionPane.showMessageDialog(vista, "Registro guardado con éxito");
+            Circuito circuito = services.getCircuitoService().crearCircuito(nombreCircuito, numeroLongitud, pais);
+            JOptionPane.showMessageDialog(vista,
+                    "Registro guardado con éxito. ID generado: " + circuito.getId());
             limpiarCamposCircuito();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(vista, "Debe ingresar números válidos");
+        }catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(vista, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, "Error inesperado al registrar circuito");
         }
     }
 

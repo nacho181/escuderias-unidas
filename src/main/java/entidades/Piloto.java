@@ -1,6 +1,7 @@
 package entidades;
 
 public class Piloto extends Persona implements Comparable<Piloto>{
+    private int idPersona;
     private int numeroCompetencia;
     private int victorias;
     private int polePosition;
@@ -17,6 +18,14 @@ public class Piloto extends Persona implements Comparable<Piloto>{
         this.vueltasRapidas = vueltasRapidas;
         this.podios = podios;
         this.puntosAcumulados = puntosAcumulados;
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
     public int getNumeroCompetencia() {

@@ -1,6 +1,7 @@
 package entidades;
 
 public abstract class Persona {
+    private int id;
     private String dni;
     private String nombre;
     private String apellido;
@@ -14,6 +15,10 @@ public abstract class Persona {
         this.nombre = nombre;
         this.apellido = apellido;
         this.pais = pais;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getDni() {
@@ -46,6 +51,10 @@ public abstract class Persona {
 
     public void setPais(Pais pais) {
         this.pais = pais;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

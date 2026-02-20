@@ -1,6 +1,7 @@
 package entidades;
 
 public class Mecanico extends Persona{
+    private int idPersona;
     private Especialidad especialidad;
     private int aniosExperiencia;
 
@@ -21,6 +22,14 @@ public class Mecanico extends Persona{
 
     public Especialidad getEspecialidad() {
         return especialidad;
+    }
+
+    public int getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(int idPersona) {
+        this.idPersona = idPersona;
     }
 
     public void setEspecialidad(Especialidad especialidad) {
