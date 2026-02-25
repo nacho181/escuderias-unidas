@@ -1,8 +1,6 @@
 package service.escuderia;
 
-import dao.escuderiaDao.EscuderiaDao;
-import dao.escuderiaDao.EscuderiaDaoImp;
-import dao.paisDao.PaisDao;
+import dao.registroGeneral.escuderiaDao.EscuderiaDao;
 import entidades.Escuderia;
 import entidades.Pais;
 

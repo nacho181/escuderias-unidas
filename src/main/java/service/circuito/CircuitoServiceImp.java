@@ -1,6 +1,6 @@
 package service.circuito;
 
-import dao.circuitoDao.CircuitoDao;
+import dao.registroGeneral.circuitoDao.CircuitoDao;
 import entidades.Circuito;
 import entidades.Pais;
 import java.util.List;

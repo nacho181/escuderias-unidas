@@ -5,6 +5,8 @@ package mvc.controlador;
 import entidades.PilotoEscuderia;
 import mvc.modelo.Modelo;
 import mvc.vista.VentanaPrincipal;
+import service.ServiceManager;
+
 import javax.swing.*;
 import java.time.LocalDate;
 
@@ -18,15 +20,17 @@ import java.time.LocalDate;
 public class ControladorGestionEscuderia {
     private final VentanaPrincipal vista;
     private final Modelo modelo;
+    private ServiceManager service;
 
     /**
      * Constructor del main.java.mvc.controlador.
      * @param modelo instancia del main.java.mvc.modelo principal.
      * @param vista  instancia de la ventana principal.
      */
-    public ControladorGestionEscuderia(Modelo modelo, VentanaPrincipal vista) {
+    public ControladorGestionEscuderia(Modelo modelo, VentanaPrincipal vista, ServiceManager service) {
         this.vista = vista;
         this.modelo = modelo;
+        this.service = service;
         inicializarEventos();
     }
 
@@ -71,8 +75,9 @@ public class ControladorGestionEscuderia {
             return;
         }
 
-        if (modelo.buscarEscuderia(nombreEscuderia) != null) {
-            modelo.getModeloGestionEscuderias().setEscuderiaSeleccionada(modelo.buscarEscuderia(nombreEscuderia));vista.mostrarPanel("escuderiaSeleccionada");
+        if (service.getEscuderiaService().obtenerPorNombre(nombreEscuderia)!= null) {
+            modelo.getModeloGestionEscuderias().setEscuderiaSeleccionada(modelo.buscarEscuderia(nombreEscuderia));
+            vista.mostrarPanel("escuderiaSeleccionada");
         } else {
             JOptionPane.showMessageDialog(null, "La escudería no existe");
         }
@@ -127,7 +132,7 @@ public class ControladorGestionEscuderia {
             JOptionPane.showMessageDialog(null, "Debe ingresar dos fechas diferentes.");
             return;
         }
-        if (modelo.buscarPiloto(dniPiloto) == null) {
+        if (service.getPilotoService().obtenerPorDni(dniPiloto) == null) {
             JOptionPane.showMessageDialog(null, "El piloto no está registrado en el sistema.");
             return;
         }

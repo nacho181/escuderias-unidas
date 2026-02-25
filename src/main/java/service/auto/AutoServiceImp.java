@@ -1,8 +1,7 @@
 package service.auto;
 
-import dao.autoDao.AutoDao;
+import dao.registroGeneral.autoDao.AutoDao;
 import entidades.Auto;
-import entidades.Pais;
 
 import java.util.List;
 

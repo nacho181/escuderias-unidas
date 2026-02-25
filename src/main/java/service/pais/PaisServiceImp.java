@@ -2,7 +2,7 @@
 
 package service.pais;
 
-import dao.paisDao.PaisDao;
+import dao.registroGeneral.paisDao.PaisDao;
 import entidades.Pais;
 
 import java.util.List;

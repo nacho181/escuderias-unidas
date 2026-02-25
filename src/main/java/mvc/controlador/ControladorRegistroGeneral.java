@@ -6,6 +6,7 @@ import mvc.vista.VentanaPrincipal;
 import service.ServiceManager;
 
 import javax.swing.*;
+import java.sql.SQLException;
 
 /**
  * Controlador responsable de manejar el registro general del sistema.
@@ -262,26 +263,21 @@ public class ControladorRegistroGeneral {
             int numeroPod = Integer.parseInt(numPod);
             int numeroPuntos = Integer.parseInt(numPuntos);
 
-            Pais pais = modelo.getModeloRegistro().comprobarPais(nombrePais);
-            if (pais == null) {
-                JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");
-                return;
-            }
+            Pais pais = services.getPaisService().obtenerPorNombre(nombrePais);
 
-            // Verificar duplicado
-            if (modelo.getModeloRegistro().comprobarPersonaDni(dni)){
-                JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
-                return;
-            }
-
-            modelo.getModeloRegistro().agregarPersonaGral(new Piloto(
-                    dni, nombre, apellido, pais, numeroCompe, numeroVict,
-                    numeroPole, numeroVuelt, numeroPod, numeroPuntos));
-            JOptionPane.showMessageDialog(vista, "Registro guardado con éxito");
+            Piloto piloto = services.getPilotoService().crearPiloto(pais, dni, nombre, apellido, numeroCompe,
+                    numeroVict, numeroVuelt, numeroPole, numeroPod, numeroPuntos);
+            JOptionPane.showMessageDialog(vista,
+                    "Registro guardado con éxito. ID generado: " + piloto.getId());
             limpiarCamposPiloto();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(vista, "Debe ingresar números válidos");
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al registrar piloto", e);
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, e.getMessage());
         }
     }
 
@@ -321,26 +317,18 @@ public class ControladorRegistroGeneral {
             }
 
             int numeroAniosExp = Integer.parseInt(aniosExp);
-            Pais pais = modelo.getModeloRegistro().comprobarPais(nombrePais);
-
-            if (pais == null) {
-                JOptionPane.showMessageDialog(vista, "Debe ingresar un país válido");
-                return;
-            }
+            Pais pais = services.getPaisService().obtenerPorNombre(nombrePais);
 
             // Verificar duplicado
-            if (modelo.getModeloRegistro().comprobarPersonaDni(dni)){
-                JOptionPane.showMessageDialog(vista, "Esta persona ya se encuentra registrada.");
-                return;
-            }
+            Mecanico mecanico = services.getMecanicoService().crearMecanico(pais, dni, nombre, apellido, especialidad, numeroAniosExp);
 
-            modelo.getModeloRegistro().agregarPersonaGral(new Mecanico(
-                    dni, nombre, apellido, pais, especialidad, numeroAniosExp));
-            JOptionPane.showMessageDialog(vista, "Registro guardado con éxito");
+            JOptionPane.showMessageDialog(vista, "Registro guardado con éxito. ID generado: " + mecanico.getId());
             limpiarCamposMecanico();
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(vista, "Debe ingresar números válidos");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(vista, e.getMessage());
         }
     }
 

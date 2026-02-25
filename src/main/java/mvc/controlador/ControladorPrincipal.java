@@ -14,7 +14,7 @@ public class ControladorPrincipal {
         inicializarEventos();
         this.services = new ServiceManager();
         new ControladorRegistroGeneral(modelo, vista, services);
-        new ControladorGestionEscuderia(modelo, vista);
+        new ControladorGestionEscuderia(modelo, vista, services);
         new ControladorPlanificarCarrera(modelo, vista);
         new ControladorRegistrarResultado(modelo, vista);
         new ControladorInformeGenerales(modelo, vista);
